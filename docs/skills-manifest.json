@@ -329,6 +329,18 @@
       "note": "Local snapshot fingerprint; install from original author and review updates.",
       "available_at_snapshot": true,
       "tree_sha256": "64c0aa0cb93ce690993cb84cfeae9ee33a58cfc2f754aa03d9b1c921b78cfe50"
+    },
+    {
+      "name": "jianying-editor",
+      "source": "https://github.com/luoluoluo22/jianying-editor-skill",
+      "commit": "32c56928ded4f9e2c2b80e099dc7abb793d2c30b",
+      "version": "1.7.0",
+      "sha256": "a4550b4a4c0598c14847843352ed33bb30b6be92aceca5d36c6782108a3ff8aa",
+      "bundled": false,
+      "license": "MIT; bundled pyJianYingDraft Apache-2.0",
+      "note": "Install from original upstream. Local draft creation verified; native app import/export require separate verification. Portrait normalization compatibility notes: jianying-editing.md. Upstream text and private media not bundled.",
+      "available_at_snapshot": true,
+      "workflow": "jianying-editing.md"
     }
   ]
 }

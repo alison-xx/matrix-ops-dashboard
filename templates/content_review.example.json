@@ -1,0 +1,54 @@
+{
+  "content_unit": {
+    "viewer_question": "",
+    "own_evidence": [],
+    "deliverable": ""
+  },
+  "claims": [
+    {
+      "claim": "",
+      "source": "",
+      "unknown": "",
+      "payoff_location": "",
+      "kind": "fact|judgment|hypothesis"
+    }
+  ],
+  "skill_route": {
+    "primary": [],
+    "method_sources": [],
+    "not_selected_reason": ""
+  },
+  "edit_delta": {
+    "before": "",
+    "after": "",
+    "why": ""
+  },
+  "visual_plan": [
+    {
+      "script_line": "",
+      "purpose": "",
+      "source_kind": "real|ai|graphic",
+      "source_file": "",
+      "source_in": null,
+      "source_out": null,
+      "output_in": null,
+      "output_out": null
+    }
+  ],
+  "delivery_check": {
+    "files_exist": false,
+    "visual_review": false,
+    "audio_qc": null,
+    "original_platform_record_checked": false,
+    "status": "draft"
+  },
+  "learning": {
+    "scope": "",
+    "hypothesis": "",
+    "metric": "",
+    "review_24h": null,
+    "review_72h": null,
+    "outcome": null,
+    "comparable_sample_count": 0
+  }
+}

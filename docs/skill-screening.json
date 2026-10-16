@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-17",
+  "scope": "公开文档研究与组合建议；不含第三方源码或调研镜像。",
+  "status_semantics": {
+    "false": "本轮未安装；方法借鉴不代表工具已接入。",
+    "existing": "研究环境已有相应工具；公开仓库不会自动安装，也不表示最新版经过运行验收。"
+  },
+  "limitations": [
+    "未执行上游代码或完成端到端运行测试。",
+    "推送时间只反映仓库活动，不证明对应技能功能已更新或可用。",
+    "安装前应复核当前许可、版本、依赖和数据流。"
+  ],
+  "items": [
+    {
+      "target": "yanhua1010/self-media-content-workflow",
+      "source": "https://github.com/yanhua1010/self-media-content-workflow",
+      "group": "operations",
+      "decision": "方法借鉴",
+      "reason": "将同类内容比较、单次实验和交付文件校验加入现有复盘；避免再建完整编排器。",
+      "integration_stage": "复盘与交付",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT（已读LICENSE）",
+      "last_push_utc": "2026-10-13T13:27:28Z",
+      "evidence_urls": [
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/README.md",
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/skills/self-media-content-workflow/SKILL.md",
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/skills/self-media-content-analytics/SKILL.md",
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/skills/self-media-content-delivery/SKILL.md",
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/skills/self-media-video-publisher/SKILL.md",
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/skills/self-media-wechat-publisher/SKILL.md",
+        "https://github.com/yanhua1010/self-media-content-workflow/blob/eaa895aa236404aa66c75625894c944217025c1e/LICENSE"
+      ]
+    },
+    {
+      "target": "SpaceZephyr/creator-buddy",
+      "source": "https://github.com/SpaceZephyr/creator-buddy",
+      "group": "operations",
+      "decision": "暂缓",
+      "reason": "检索能力与常见采集链重叠；MIT声明尚缺独立许可文本核验。",
+      "integration_stage": "采集能力缺口评估",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "README及SKILL声明MIT，但未找到独立LICENSE；GitHub许可null，授权文本待补核",
+      "last_push_utc": "2026-08-26T08:49:06Z",
+      "evidence_urls": [
+        "https://github.com/SpaceZephyr/creator-buddy/blob/edf46c567ff54b72ee2157d06f3a02dbd67aaa9c/README.md",
+        "https://github.com/SpaceZephyr/creator-buddy/blob/edf46c567ff54b72ee2157d06f3a02dbd67aaa9c/SKILL.md",
+        "https://github.com/SpaceZephyr/creator-buddy/blob/edf46c567ff54b72ee2157d06f3a02dbd67aaa9c/gzh-Skills/global-content-search/SKILL.md"
+      ]
+    },
+    {
+      "target": "otter1101/blogger-distiller",
+      "source": "https://github.com/otter1101/blogger-distiller",
+      "group": "operations",
+      "decision": "方法借鉴",
+      "reason": "保留匿名化和证据分层思路；自动更新、安装与凭据保存行为需独立审查。",
+      "integration_stage": "对标研究",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT（已读LICENSE）；另有学习研究与数据使用说明",
+      "last_push_utc": "2026-09-23T08:59:25Z",
+      "evidence_urls": [
+        "https://github.com/otter1101/blogger-distiller/blob/1d787e721b4518e145dd829e29f1a5af175ed294/README.md",
+        "https://github.com/otter1101/blogger-distiller/blob/1d787e721b4518e145dd829e29f1a5af175ed294/SKILL.md",
+        "https://github.com/otter1101/blogger-distiller/blob/1d787e721b4518e145dd829e29f1a5af175ed294/SECURITY.md",
+        "https://github.com/otter1101/blogger-distiller/blob/1d787e721b4518e145dd829e29f1a5af175ed294/DISCLAIMER.md",
+        "https://github.com/otter1101/blogger-distiller/blob/1d787e721b4518e145dd829e29f1a5af175ed294/LICENSE"
+      ]
+    },
+    {
+      "target": "fxyadela/write-then-publish",
+      "source": "https://github.com/fxyadela/write-then-publish",
+      "group": "operations",
+      "decision": "排除商业接入",
+      "reason": "当前个人非商业许可不覆盖商业内容生产；取得相应授权前不接入。",
+      "integration_stage": "无",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "个人非商业许可证v1.0（2026-08-08），明确禁止公司、团队、营销内容生产等商业用途；商业需书面许可",
+      "last_push_utc": "2026-10-04T17:51:46Z",
+      "evidence_urls": [
+        "https://github.com/fxyadela/write-then-publish/blob/6ff00b06ae0f04aa119449a037a4a1c83e03c8ae/README.md",
+        "https://github.com/fxyadela/write-then-publish/blob/6ff00b06ae0f04aa119449a037a4a1c83e03c8ae/LICENSE",
+        "https://github.com/fxyadela/write-then-publish/blob/6ff00b06ae0f04aa119449a037a4a1c83e03c8ae/package.json"
+      ]
+    },
+    {
+      "target": "xintu1314/content-boom-monitor",
+      "source": "https://github.com/xintu1314/content-boom-monitor",
+      "group": "operations",
+      "decision": "方法借鉴",
+      "reason": "只提炼同账号基线和候选分流方法；无明确代码许可，不复制或安装实现。",
+      "integration_stage": "热点筛选",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "未指定许可证，README明确说明；不复制修改分发其代码",
+      "last_push_utc": "2026-08-03T12:18:07Z",
+      "evidence_urls": [
+        "https://github.com/xintu1314/content-boom-monitor/blob/98e786e7c5e8c6ca641b688e2948772a7a76f9a9/README.md",
+        "https://github.com/xintu1314/content-boom-monitor/blob/98e786e7c5e8c6ca641b688e2948772a7a76f9a9/SKILL.md"
+      ]
+    },
+    {
+      "target": "Xiangyu-CAS/xiaohongshu-ops-skill",
+      "source": "https://github.com/Xiangyu-CAS/xiaohongshu-ops-skill",
+      "group": "operations",
+      "decision": "暂缓",
+      "reason": "许可未明确，固定浏览器环境也增加集成成本；保留表单与素材顺序核对思路。",
+      "integration_stage": "发布前检查",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "未见LICENSE，GitHub许可null",
+      "last_push_utc": "2026-03-19T11:40:45Z",
+      "evidence_urls": [
+        "https://github.com/Xiangyu-CAS/xiaohongshu-ops-skill/blob/5b0b80b7261396955de0494df18182f2401cabc4/README.md",
+        "https://github.com/Xiangyu-CAS/xiaohongshu-ops-skill/blob/5b0b80b7261396955de0494df18182f2401cabc4/SKILL.md",
+        "https://github.com/Xiangyu-CAS/xiaohongshu-ops-skill/blob/5b0b80b7261396955de0494df18182f2401cabc4/references/xhs-publish-flows.md",
+        "https://github.com/Xiangyu-CAS/xiaohongshu-ops-skill/blob/5b0b80b7261396955de0494df18182f2401cabc4/references/xhs-runtime-rules.md",
+        "https://github.com/Xiangyu-CAS/xiaohongshu-ops-skill/blob/5b0b80b7261396955de0494df18182f2401cabc4/references/xhs-comment-ops.md"
+      ]
+    },
+    {
+      "target": "imraywang/wewrite",
+      "source": "https://github.com/imraywang/wewrite",
+      "group": "operations",
+      "decision": "方法借鉴",
+      "reason": "任务书与事实清单适合审稿；学习记录按适用范围累积，不另建写作及发布系统。",
+      "integration_stage": "审稿与每日学习",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT（已读LICENSE及pyproject）",
+      "last_push_utc": "2026-10-12T09:19:21Z",
+      "evidence_urls": [
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/README.md",
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/skills/wewrite/SKILL.md",
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/skills/wewrite-publish/SKILL.md",
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/skills/wewrite-learn/SKILL.md",
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/skills/wewrite-learn/references/learn-edits.md",
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/pyproject.toml",
+        "https://github.com/imraywang/wewrite/blob/de69e06c2596a0f3e2b0eb3d6229f201d7559584/LICENSE"
+      ]
+    },
+    {
+      "target": "wechatsync/Wechatsync",
+      "source": "https://github.com/wechatsync/Wechatsync",
+      "group": "operations",
+      "decision": "暂缓",
+      "reason": "需要扩展与多站登录态；已有通道可用时不增加分发后端，GPL代码与本仓库分别管理。",
+      "integration_stage": "未来草稿同步备选",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "GPL-3.0（LICENSE已读；不将实现拷入现有公开仓库）",
+      "last_push_utc": "2026-05-27T05:33:56Z",
+      "evidence_urls": [
+        "https://github.com/wechatsync/Wechatsync/blob/a98e42865387285afcc027c61836488748f3b30f/README.md",
+        "https://github.com/wechatsync/Wechatsync/blob/a98e42865387285afcc027c61836488748f3b30f/skills/wechatsync/SKILL.md",
+        "https://github.com/wechatsync/Wechatsync/blob/a98e42865387285afcc027c61836488748f3b30f/packages/cli/README.md",
+        "https://github.com/wechatsync/Wechatsync/blob/a98e42865387285afcc027c61836488748f3b30f/package.json",
+        "https://github.com/wechatsync/Wechatsync/blob/a98e42865387285afcc027c61836488748f3b30f/LICENSE"
+      ]
+    },
+    {
+      "target": "xaiwind/x-article-publisher",
+      "source": "https://github.com/xaiwind/x-article-publisher",
+      "group": "operations",
+      "decision": "暂缓",
+      "reason": "仅面向X长文章草稿；需先核账号资格与会话隔离，不能替代原生短文通道。",
+      "integration_stage": "未来长文章备选",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "LICENSE正文MIT且保留三层衍生署名；GitHub自动识别NOASSERTION，以实读文本为准",
+      "last_push_utc": "2026-08-30T05:14:52Z",
+      "evidence_urls": [
+        "https://github.com/xaiwind/x-article-publisher/blob/6cd2f1b752afe966c00bb803c1a1c5eb7a1085d4/README.md",
+        "https://github.com/xaiwind/x-article-publisher/blob/6cd2f1b752afe966c00bb803c1a1c5eb7a1085d4/SKILL.md",
+        "https://github.com/xaiwind/x-article-publisher/blob/6cd2f1b752afe966c00bb803c1a1c5eb7a1085d4/package.json",
+        "https://github.com/xaiwind/x-article-publisher/blob/6cd2f1b752afe966c00bb803c1a1c5eb7a1085d4/LICENSE"
+      ]
+    },
+    {
+      "target": "JimLiu/baoyu-skills",
+      "source": "https://github.com/JimLiu/baoyu-skills",
+      "group": "visual",
+      "decision": "候选采用",
+      "reason": "按需要选封面、文章配图或信息图子技能；不连带启用发布和登录相关模块。",
+      "integration_stage": "概念封面与配图",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT；复制或改编保留Jim Liu版权和许可。第三方图片与服务条款另外适用。",
+      "last_push_utc": "2026-09-10T15:13:43Z",
+      "evidence_urls": [
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/README.md",
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/LICENSE",
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/skills/baoyu-article-illustrator/SKILL.md",
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/skills/baoyu-cover-image/SKILL.md",
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/skills/baoyu-infographic/SKILL.md",
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/skills/baoyu-xhs-images/SKILL.md",
+        "https://github.com/JimLiu/baoyu-skills/blob/1567581c26ec29f4216c6e6835415bf30343b0e3/skills/baoyu-image-gen/SKILL.md"
+      ]
+    },
+    {
+      "target": "op7418/guizang-social-card-skill",
+      "source": "https://github.com/op7418/guizang-social-card-skill",
+      "group": "visual",
+      "decision": "沿用已有",
+      "reason": "可用于真实截图和教程卡片；按AGPL保留代码边界，不把素材署名等同于使用许可。",
+      "integration_stage": "证据图卡",
+      "installed": "existing",
+      "executed_during_screening": false,
+      "license_summary": "AGPL-3.0。商用并非一概禁止；修改/分发及修改版网络服务涉及相应源码义务。不要把第三方技能直接复制进项目公开同步包；生成图片与技能代码分别判断，保留许可来源。",
+      "last_push_utc": "2026-07-01T16:39:11Z",
+      "evidence_urls": [
+        "https://github.com/op7418/guizang-social-card-skill/blob/cf4b810fac1c73fb65a2bb31d8c9278d82cbc4c5/README.md",
+        "https://github.com/op7418/guizang-social-card-skill/blob/cf4b810fac1c73fb65a2bb31d8c9278d82cbc4c5/LICENSE",
+        "https://github.com/op7418/guizang-social-card-skill/blob/cf4b810fac1c73fb65a2bb31d8c9278d82cbc4c5/SKILL.md"
+      ]
+    },
+    {
+      "target": "adrianpunk/Punk-Skill",
+      "source": "https://github.com/adrianpunk/Punk-Skill",
+      "group": "visual",
+      "decision": "许可暂缓",
+      "reason": "当前版本商业使用需另行授权；不以历史MIT版本印象覆盖当前许可。",
+      "integration_stage": "取得授权后再评估封面",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "根LICENSE与LICENSE-PERSONAL.md及COMMERCIAL-LICENSE.md均已读：v2+个人非商用许可；旧MIT版本权利保留，但本轮未核验旧tag完整副本，不能用旧MIT印象覆盖当前main。THIRD_PARTY_NOTICES仍有来源核验声明。",
+      "last_push_utc": "2026-10-11T12:22:56Z",
+      "evidence_urls": [
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/README.md",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/LICENSE",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/LICENSE-PERSONAL.md",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/COMMERCIAL-LICENSE.md",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/THIRD_PARTY_NOTICES.md",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/skills/punk-cover/SKILL.md",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/skills/punk-avatar/SKILL.md",
+        "https://github.com/adrianpunk/Punk-Skill/blob/c9ad7a3745e07060c50270141efed418a0cd04d6/skills/punk-ip-video-cover/SKILL.md"
+      ]
+    },
+    {
+      "target": "helloianneo/ian-xiaohei-illustrations",
+      "source": "https://github.com/helloianneo/ian-xiaohei-illustrations",
+      "group": "visual",
+      "decision": "候选采用",
+      "reason": "可作为低频概念解释风格；保留作者署名，不将既有角色宣称为自创品牌。",
+      "integration_stage": "长文解释图",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT；LICENSE版权为Ian。NOTICE要求再分发/改编保留Ian Xiaohei Illustrations名称或在派生文档署名。",
+      "last_push_utc": "2026-09-24T22:14:01Z",
+      "evidence_urls": [
+        "https://github.com/helloianneo/ian-xiaohei-illustrations/blob/4102eb807f03bcb6e538a16e8b31b41db8b5b954/README.md",
+        "https://github.com/helloianneo/ian-xiaohei-illustrations/blob/4102eb807f03bcb6e538a16e8b31b41db8b5b954/LICENSE",
+        "https://github.com/helloianneo/ian-xiaohei-illustrations/blob/4102eb807f03bcb6e538a16e8b31b41db8b5b954/NOTICE.md",
+        "https://github.com/helloianneo/ian-xiaohei-illustrations/blob/4102eb807f03bcb6e538a16e8b31b41db8b5b954/ian-xiaohei-illustrations/SKILL.md"
+      ]
+    },
+    {
+      "target": "mcncarl/yichen-skills",
+      "source": "https://github.com/mcncarl/yichen-skills",
+      "group": "visual",
+      "decision": "许可暂缓",
+      "reason": "整库业务运营用途受限；已有剪辑与转写能力时不引入受限工具集合。",
+      "integration_stage": "取得授权后再评估",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "Personal Learning and Non-Commercial Use License；业务运营与公共技能包再分发须事先书面授权。README与LICENSE联系账号不同，不自行假定会员或询价等于授权。第三方NOTICES单列来源。",
+      "last_push_utc": "2026-10-04T10:44:55Z",
+      "evidence_urls": [
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/README.md",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/LICENSE",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/THIRD_PARTY_NOTICES.md",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/yichen-jianying-edit/SKILL.md",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/yichen-asr/SKILL.md",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/yichen-content-archive/SKILL.md",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/yichen-web-research/SKILL.md",
+        "https://github.com/mcncarl/yichen-skills/blob/9bd78982aa75aa179258bc9009fe4dcf2f2973b9/yichen-x-slicer/SKILL.md"
+      ]
+    },
+    {
+      "target": "imlewc/video-to-subtitle-summary-skill",
+      "source": "https://github.com/imlewc/video-to-subtitle-summary-skill",
+      "group": "video",
+      "decision": "方法借鉴",
+      "reason": "借鉴本地字幕及资料回看流程；先复用已有ASR，摘要不能代替原始证据。",
+      "integration_stage": "素材整理",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT，保留版权及许可。",
+      "last_push_utc": "2026-07-19T03:31:48Z",
+      "evidence_urls": [
+        "https://github.com/imlewc/video-to-subtitle-summary-skill/blob/main/README.md",
+        "https://github.com/imlewc/video-to-subtitle-summary-skill/blob/main/SKILL.md",
+        "https://github.com/imlewc/video-to-subtitle-summary-skill/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "xueyuanhuang/seedance-prompt-skill",
+      "source": "https://github.com/xueyuanhuang/seedance-prompt-skill",
+      "group": "video",
+      "decision": "方法借鉴",
+      "reason": "吸收动作、镜头和时轴描述方法；供应商专用参数必须按实际接口另核。",
+      "integration_stage": "内容驱动分镜",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT，保留版权及许可。",
+      "last_push_utc": "2026-03-19T18:16:11Z",
+      "evidence_urls": [
+        "https://github.com/xueyuanhuang/seedance-prompt-skill/blob/main/README.md",
+        "https://github.com/xueyuanhuang/seedance-prompt-skill/blob/main/skills/seedance/SKILL.md",
+        "https://github.com/xueyuanhuang/seedance-prompt-skill/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "Vincentwei1021/video-talkcraft",
+      "source": "https://github.com/Vincentwei1021/video-talkcraft",
+      "group": "video",
+      "decision": "许可暂缓",
+      "reason": "商业使用受限且增加独立运行时；授权和版本隔离未解决前不接入。",
+      "integration_stage": "取得授权后再评估",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "PolyForm Noncommercial 1.0.0；仓库明确任何商业使用需作者预先授权。视频归创作者不等于工具可无授权商用。",
+      "last_push_utc": "2026-10-12T05:29:10Z",
+      "evidence_urls": [
+        "https://github.com/Vincentwei1021/video-talkcraft/blob/main/README.md",
+        "https://github.com/Vincentwei1021/video-talkcraft/blob/main/SKILL.md",
+        "https://github.com/Vincentwei1021/video-talkcraft/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "oil-oil/video-publisher-skill",
+      "source": "https://github.com/oil-oil/video-publisher-skill",
+      "group": "video",
+      "decision": "方法借鉴",
+      "reason": "采用任务身份与恢复已有任务的原则；发布就绪与平台公开需分别确认。",
+      "integration_stage": "发布恢复与去重",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT，保留版权及许可。",
+      "last_push_utc": "2026-10-14T07:44:29Z",
+      "evidence_urls": [
+        "https://github.com/oil-oil/video-publisher-skill/blob/main/README.md",
+        "https://github.com/oil-oil/video-publisher-skill/blob/main/video-publisher/SKILL.md",
+        "https://github.com/oil-oil/video-publisher-skill/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "mcncarl/jianying-headless",
+      "source": "https://github.com/mcncarl/jianying-headless",
+      "group": "video",
+      "decision": "许可暂缓",
+      "reason": "业务运营授权与本机版本绑定均需先解决；不把文档能力当无人值守导出验收。",
+      "integration_stage": "取得授权后再评估",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "个人学习与非商业许可；商业/业务运营及公共打包再分发需作者书面授权；第三方声明另保留。",
+      "last_push_utc": "2026-10-15T13:54:54Z",
+      "evidence_urls": [
+        "https://github.com/mcncarl/jianying-headless/blob/main/README.md",
+        "https://github.com/mcncarl/jianying-headless/blob/main/skills/yichen-jianying-edit/SKILL.md",
+        "https://github.com/mcncarl/jianying-headless/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "heygen-com/hyperframes",
+      "source": "https://github.com/heygen-com/hyperframes",
+      "group": "video",
+      "decision": "沿用已有",
+      "reason": "保留单一主渲染引擎；升级须验证版本兼容和成片音画，不自动追随最新指令。",
+      "integration_stage": "主视频合成",
+      "installed": "existing",
+      "executed_during_screening": false,
+      "license_summary": "Apache-2.0，保留许可/NOTICE及修改声明；素材和字体授权独立。",
+      "last_push_utc": "2026-10-16T19:41:50Z",
+      "evidence_urls": [
+        "https://github.com/heygen-com/hyperframes/blob/main/README.md",
+        "https://github.com/heygen-com/hyperframes/blob/main/skills/hyperframes/SKILL.md",
+        "https://github.com/heygen-com/hyperframes/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "remotion-dev/remotion",
+      "source": "https://github.com/remotion-dev/remotion",
+      "group": "video",
+      "decision": "暂缓",
+      "reason": "第二渲染引擎增加依赖与验收成本；先核主体许可，出现明确能力缺口再试。",
+      "integration_stage": "特殊React动画备选",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "Remotion自定义许可；个人、最多3名员工的营利组织及非营利等符合免费条件，其他公司需Company License；不得按MIT理解。",
+      "last_push_utc": "2026-10-16T18:22:18Z",
+      "evidence_urls": [
+        "https://github.com/remotion-dev/remotion/blob/main/README.md",
+        "https://github.com/remotion-dev/remotion/blob/main/LICENSE.md"
+      ]
+    },
+    {
+      "target": "affaan-m/everything-claude-code/skills/remotion-video-creation/SKILL.md",
+      "source": "https://github.com/affaan-m/ECC/blob/main/skills/remotion-video-creation/SKILL.md",
+      "group": "video",
+      "decision": "方法借鉴",
+      "reason": "提炼字幕、字体边界、音频时长与帧同步检查；规则许可不替代运行时许可。",
+      "integration_stage": "视频质量检查",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "ECC仓库MIT；Remotion运行时仍适用自己的许可，不能继承MIT免除限制。",
+      "last_push_utc": "2026-10-15T19:17:01Z",
+      "evidence_urls": [
+        "https://github.com/affaan-m/everything-claude-code/blob/main/README.md",
+        "https://github.com/affaan-m/everything-claude-code/blob/main/skills/remotion-video-creation/SKILL.md",
+        "https://github.com/affaan-m/everything-claude-code/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "affaan-m/everything-claude-code/skills/manim-video/SKILL.md",
+      "source": "https://github.com/affaan-m/ECC/blob/main/skills/manim-video/SKILL.md",
+      "group": "video",
+      "decision": "方法借鉴",
+      "reason": "技术图解可按单场景单结论组织；仅在明确需求时试制短素材，不新增常规引擎。",
+      "integration_stage": "技术概念分镜",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "ECC仓库MIT；Manim及字体/LaTeX等依赖另核查，ECC许可不代替依赖许可。",
+      "last_push_utc": "2026-10-15T19:17:01Z",
+      "evidence_urls": [
+        "https://github.com/affaan-m/everything-claude-code/blob/main/README.md",
+        "https://github.com/affaan-m/everything-claude-code/blob/main/skills/manim-video/SKILL.md",
+        "https://github.com/affaan-m/everything-claude-code/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "browser-use/video-use",
+      "source": "https://github.com/browser-use/video-use",
+      "group": "video",
+      "decision": "方法借鉴",
+      "reason": "吸收剪点、时间映射和字幕后置原则；不默认云转写或多引擎并行。",
+      "integration_stage": "口播剪辑与检查",
+      "installed": false,
+      "executed_during_screening": false,
+      "license_summary": "MIT，保留版权及许可；ElevenLabs服务与各渲染引擎各自条款。",
+      "last_push_utc": "2026-10-08T22:17:01Z",
+      "evidence_urls": [
+        "https://github.com/browser-use/video-use/blob/main/README.md",
+        "https://github.com/browser-use/video-use/blob/main/SKILL.md",
+        "https://github.com/browser-use/video-use/blob/main/LICENSE"
+      ]
+    },
+    {
+      "target": "luoluoluo22/jianying-editor-skill",
+      "source": "https://github.com/luoluoluo22/jianying-editor-skill",
+      "group": "video",
+      "decision": "沿用已有",
+      "reason": "限定为可编辑草稿交接；Mac草稿支持不代表自动成片导出，需实际保存重开验证。",
+      "integration_stage": "可编辑草稿交接",
+      "installed": "existing",
+      "executed_during_screening": false,
+      "license_summary": "主项目MIT；内嵌pyJianYingDraft为Apache-2.0，LICENSE同时说明；GitHub自动标NOASSERTION不等于无许可。",
+      "last_push_utc": "2026-09-11T09:36:48Z",
+      "evidence_urls": [
+        "https://github.com/luoluoluo22/jianying-editor-skill/blob/main/README.md",
+        "https://github.com/luoluoluo22/jianying-editor-skill/blob/main/SKILL.md",
+        "https://github.com/luoluoluo22/jianying-editor-skill/blob/main/LICENSE"
+      ]
+    }
+  ]
+}

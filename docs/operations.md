@@ -66,3 +66,7 @@ python3 dashboard/server.py --demo
 ### 人工发表平台的邮件交付
 
 可在视频号账号配置中设置 `publish_via: email`，由运营任务运行 `publication_mail.py <post.json> --id <条目id> --send`，将审核后的标题、正文、视频和封面邮件交给账号持有人。大视频超过附件限制时给素材下载链接。SMTP回执按材料版本去重，结果不明不重发；状态为manual_pending，不能计为已发布。ops.py禁止将邮件交付平台直接提交发布。收到作品链接并核实后才登记公开。配置SMTP和自己的通知邮箱后使用，不包含任何真实运营者资料。
+
+## 技能筛选与组合
+
+新增工具前先看 [技能筛选与组合指南](skill-composition.md) 和 [25项筛选目录](skill-screening.json)。目录区分方法借鉴、已有工具、未安装候选与许可暂缓；文档研究不等于运行验收。
