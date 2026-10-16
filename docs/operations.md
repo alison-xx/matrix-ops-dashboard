@@ -70,3 +70,9 @@ python3 dashboard/server.py --demo
 ## 技能筛选与组合
 
 新增工具前先看 [技能筛选与组合指南](skill-composition.md) 和 [25项筛选目录](skill-screening.json)。目录区分方法借鉴、已有工具、未安装候选与许可暂缓；文档研究不等于运行验收。
+
+## 本机 Obsidian 知识库
+
+`scripts/obsidian_sync.py` 将自行指定的 Markdown 来源目录增量导入本机 Obsidian 仓库。复制 `config/obsidian-sync.example.json` 为本地 `config/obsidian-sync.json`，填写自己的注册表路径、vault ID和来源目录，再执行 `python scripts/obsidian_sync.py`。`playbook.py end` 在存在此配置时自动同步；每小时兜底需在自己的调度器中配置，本仓库不安装常驻任务。
+
+同步以来源文档为准，保留 source 与更新时间，生成索引和双链。目标有手动编辑时不覆盖，新版本保留在 `state/obsidian-sync/incoming/`；源删除时保留旧笔记并记状态。建议个人笔记放在同步目录外。配置密钥值在文本中命中会省略，但本工具不构成公开脱敏保证。私人知识库、源手册、日报、注册表和同步状态均不应提交公开仓库，也不自动配置跨设备云同步。

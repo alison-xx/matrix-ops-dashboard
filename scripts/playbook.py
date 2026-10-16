@@ -419,6 +419,11 @@ def main():
     elif cmd == 'end':
         log_run(a[1], 'end', a[2] if len(a) > 2 else '')
         print('已记录收工')
+        if (ROOT / 'config/obsidian-sync.json').exists():
+            result = subprocess.run([sys.executable, str(ROOT / 'scripts/obsidian_sync.py')],
+                                    timeout=60, check=False)
+            if result.returncode:
+                print('知识库同步待处理：查看 state/obsidian-sync/last-sync.json')
     elif cmd == 'audit':
         errs, _ = audit()
         sys.exit(1 if errs else 0)

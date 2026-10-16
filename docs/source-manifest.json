@@ -177,6 +177,11 @@
       "mode": "sanitized-source"
     },
     {
+      "path": "scripts/obsidian_sync.py",
+      "sha256": "5b53c2dcbc019865f9e611b4b176941ebb2442524f938da15f45682fba217f36",
+      "mode": "sanitized-source"
+    },
+    {
       "path": "scripts/ops.py",
       "sha256": "278c38313ad94476cf9163e9eee20b406788903f69e7ee69a15d6227fdea3d47",
       "mode": "sanitized-source"
@@ -188,7 +193,7 @@
     },
     {
       "path": "scripts/playbook.py",
-      "sha256": "f592f469f1b462ed660c08280e2c496a90547521682b2ade793e1793fcdaf14c",
+      "sha256": "5a64c301bc5f64781fc64d7379be193d29547b70f1adcb4ae4fb50d8d2333eb7",
       "mode": "sanitized-source"
     },
     {

@@ -1,0 +1,9 @@
+{
+  "registry": "~/Library/Application Support/obsidian/obsidian.json",
+  "vault_id": "YOUR_VAULT_ID",
+  "folder": "矩阵运营",
+  "sources": [
+    {"from": "运营手册", "to": "手册", "patterns": ["**/*.md"]},
+    {"from": "reports", "to": "复盘", "patterns": ["*.md"]}
+  ]
+}
