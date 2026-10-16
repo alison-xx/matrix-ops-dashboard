@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "daily_usd_limit": 0,
+  "cycle_usd_limit": 0,
+  "cycle_start": "2026-01-01",
+  "max_writes_per_day": 2,
+  "ai_reply_approved": false
+}

@@ -114,6 +114,9 @@ def preflight(c, r):
 
 
 def add(c, iid, slot, hhmm, payload, content_file=None, approve=False):
+    if slot == 'x':
+        from x_api import add as x_add
+        return x_add(c, iid, hhmm, payload)
     acc = SCHED['accounts'][slot]
     day = iid[:10]
     due = dt.datetime.fromisoformat(f'{day}T{hhmm}:00').replace(tzinfo=TZ)
@@ -233,6 +236,9 @@ def submit(c, iid, from_dispatch=False):
     r = c.execute('SELECT * FROM items WHERE id=?', (iid,)).fetchone()
     if not r or r['status'] != 'ready':
         raise ValueError(f'{iid} 不是 ready，阻止重复提交')
+    if r['slot'] == 'x':
+        from x_api import submit as x_submit
+        return x_submit(c, iid)
     due = dt.datetime.fromisoformat(r['due'])
     if r['mode'] == 'dispatch':
         lag = (now() - due).total_seconds()
@@ -272,11 +278,18 @@ def dispatch(c):
     due_rows = [r for r in c.execute("SELECT * FROM items WHERE status='ready' AND mode='dispatch' ORDER BY due").fetchall()
                 if now() >= dt.datetime.fromisoformat(r['due'])]
     down, canary = {}, False
-    if due_rows:
+    if any(r['slot'] != 'x' for r in due_rows):
         from playbook import proxy_health, NO_PROXY_SLOTS   # 代理故障时不再往坏通道里送（00-必读 2.5.9），转网页待发
         h = proxy_health()
         down, canary = h['slots'], h.get('canary', False)
     for r in due_rows:
+        if r['slot'] == 'x':
+            from x_api import submit as x_submit
+            try:
+                res.append(x_submit(c, r['id']))
+            except Exception as e:
+                res.append({'id': r['id'], 'error': str(e)})
+            continue
         # 所有账号绑的是同一个代理入口：一个平台判故障，其他走代理的平台（知乎等最近没提交过的）也一样
         if down and r['slot'] not in NO_PROXY_SLOTS and canary:
             canary = False   # 故障超过 1 小时：放这一条去云端试探，失败会进补发清单，成功就恢复

@@ -168,7 +168,7 @@
     },
     {
       "path": "scripts/ops.py",
-      "sha256": "85a03e0472e7fa170d06e057af6a6a081e2de4f7c568479f148aa990359f85b3",
+      "sha256": "f7e6246cc41d9b39219c04854bd240e4198af6d077f8ef202674844a49be3801",
       "mode": "sanitized-source"
     },
     {
@@ -259,6 +259,11 @@
     {
       "path": "scripts/web_shot.py",
       "sha256": "b76d7d38ab0fe49a301c01f477fa65ff60a0eb9346cd1023510bdbcc1121b3d5",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/x_api.py",
+      "sha256": "bc8087c4d6a3e715827a017959dbfbcd488f93315522a4d81a2df9e29845e6ef",
       "mode": "sanitized-source"
     }
   ]
