@@ -137,7 +137,7 @@ def build(post_path):
                 if p.get('short_title'):
                     cpf['short_title'] = p['short_title']
             pa['accountForms'] = [{'platformAccountId': acc['account_id'], 'video': video, 'cover': cover, 'coverKey': cover['key'], 'contentPublishForm': cpf}]
-        elif bslot == 'kuaishou':  # 快手-Open 视频（接口兜底；默认网页发布 web_publish/kuaishou.js）
+        elif bslot == 'kuaishou':  # 快手-Open 视频（默认蚁小二接口；网页仅备用）
             video = upload(rel(p['video']), cache)
             cover = upload(rel(p['cover']), cache)
             cpf = {'formType': 'task', 'description': p.get('description', ''), 'visibleType': 0, 'pubType': 1, **sched}

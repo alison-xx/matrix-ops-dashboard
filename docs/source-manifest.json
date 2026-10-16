@@ -23,7 +23,7 @@
     },
     {
       "path": "scripts/build_payload.py",
-      "sha256": "ea4f495a60582342c4318ea82d7e5a20defb93ab94c02b25ae42537618ee675f",
+      "sha256": "26de860a59c3390eec0209b182251dc6e774389d61b333c41698e87245285c44",
       "mode": "sanitized-source"
     },
     {
@@ -168,7 +168,7 @@
     },
     {
       "path": "scripts/ops.py",
-      "sha256": "f7e6246cc41d9b39219c04854bd240e4198af6d077f8ef202674844a49be3801",
+      "sha256": "562cb2009b9e70e74e04546f508cb921396be538431e9f8ed078b7e5fc226adb",
       "mode": "sanitized-source"
     },
     {

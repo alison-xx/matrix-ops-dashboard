@@ -54,3 +54,7 @@ python3 dashboard/server.py --demo
 在本地 `config/report-mail.json` 配置 `to` 与 `site_url`，SMTP配置参考环境变量示例。完成自己账号的邮件授权后，用调度器每天09:00运行 `python scripts/report_mail.py --send`。脚本不替你创建调度。`state/report-mail.sqlite3` 按日期/收件人去重；`sending` 表示回执不确定，先查邮件服务再处理，不能自动删记录重发。SMTP接受不代表收件箱确认收到。
 
 邮件使用 `report_email_layout.py` 的专用HTML版式，内联样式、简短原帖链接、手机两列摘要，完整流水放附件。首次改版保留旧回执，并按固定版式版本去重，不随每次渲染产生新发信记录。
+
+## 发布通道选择
+
+支持的平台优先使用蚁小二已有授权，通过CLI或其创作中心完成发布；只在能力缺口或故障时考虑已授权网页。切换前先核原任务终态，避免重复作品。validate和dry-run只能证明请求通过预检，不能证明登录有效、上传成功或作品公开。工具明确拒绝站点访问时停止相关操作，不换客户端、浏览器表面或API绕过；保留待发稿和阻断记录。

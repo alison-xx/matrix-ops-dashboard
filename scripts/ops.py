@@ -17,7 +17,7 @@
   ops.py withdraw <id> <原因>  用户撤掉的条目，不再补发
   ops.py claim <id> <slot> <HH:MM> <post.json> [备注]   网页发布前先占位（publishing），防两个会话重复发
   ops.py link <id> <url>      记录人工核验后的公开链接
-  ops.py web <id> <slot> <HH:MM> <post.json> [备注]   登记网页直发（视频号默认走网页，见 平台打法/视频号.md）
+  ops.py web <id> <slot> <HH:MM> <post.json> [备注]   登记网页备用通道（默认优先蚁小二，见 00-必读 2.5）
 """
 import argparse, datetime as dt, hashlib, json, pathlib, re, sqlite3, subprocess, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
