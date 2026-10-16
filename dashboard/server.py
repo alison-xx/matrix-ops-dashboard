@@ -32,7 +32,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-APP_VERSION = '3.0.0'
+APP_VERSION = '3.1.0'
 DASH = Path(__file__).resolve().parent
 STATIC = DASH / 'static'
 HOST, PORT = '127.0.0.1', 8790
@@ -349,14 +349,14 @@ def slot_for_metrics(platform, account):
 
 # ---------- 台账 ----------
 DONE = {'success', 'public', 'web'}
-QUEUE = {'draft', 'checked', 'ready', 'submitting', 'submitted', 'scheduled'}
+QUEUE = {'draft', 'checked', 'ready', 'submitting', 'submitted', 'scheduled', 'web_pending', 'publishing'}
 FAIL = {'failed', 'blocked'}
 WARN = {'uncertain'}
-MUTED = {'platform_draft', 'deleted_dup'}
+MUTED = {'platform_draft', 'deleted_dup', 'withdrawn'}
 STATUS_LABEL = {
     'draft': '草稿', 'checked': '已检查', 'ready': '待提交', 'submitting': '提交中', 'submitted': '已提交',
     'scheduled': '已定时', 'success': '发布成功', 'public': '已公开', 'web': '网页已发', 'platform_draft': '平台草稿箱',
-    'blocked': '被拦截', 'failed': '失败', 'uncertain': '待核实', 'deleted_dup': '已删重复',
+    'blocked': '被拦截', 'failed': '失败', 'uncertain': '待核实', 'deleted_dup': '已删重复', 'withdrawn': '已撤销', 'web_pending': '待网页发表', 'publishing': '网页发布中',
 }
 RESOLVED_HINT = re.compile(r'撤掉|已撤|撤回|已取消|作废|不再重发|已处理|无需处理|已删除')
 
@@ -411,7 +411,7 @@ FAIL_OTHER = ('other', '其他', '看「发布返回原文」定位，处理后�
 FLAG_HINT = {
     'overdue': '到点 10 分钟还没提交：看「任务运行」里对应定时任务有没有开工，必要时手动提交',
     'stuck': '「提交中」超过 30 分钟：到发布工具或平台后台确认任务状态，再更新台账',
-    'unconfirmed': '到点提交后 1 小时还没确认结果：去平台确认是否已发出，回填链接',
+    'unconfirmed': '已到点但平台结果尚未确认：先去平台核实，再回填状态与链接，不能直接重发',
 }
 
 
@@ -472,9 +472,9 @@ def enrich_items(rows, accmap):
         if st in DONE:
             b = 'done'
         elif st == 'scheduled' and due and due <= t_now:
-            b = 'done'
+            b = 'warn'
             d['aired'] = True
-            d['status_label'] = '定时已到点'
+            d['status_label'] = '到点待核实'
         elif st in QUEUE:
             b = 'queue'
         elif st in FAIL:
@@ -488,18 +488,22 @@ def enrich_items(rows, accmap):
         d['bucket'] = b
         # 异常：到点没提交、长时间提交中
         flag = None
-        if st in ('draft', 'checked', 'ready') and due and t_now - due > dt.timedelta(minutes=10):
+        if st in ('draft', 'checked', 'ready', 'web_pending') and due and t_now - due > dt.timedelta(minutes=10):
             flag = 'overdue'
-        elif st == 'submitting' and upd and t_now - upd > dt.timedelta(minutes=30):
+        elif st in ('submitting', 'publishing') and upd and t_now - upd > dt.timedelta(minutes=30):
             flag = 'stuck'
         elif st == 'submitted' and d.get('mode') == 'dispatch' and due and t_now - due > dt.timedelta(minutes=60):
+            flag = 'unconfirmed'
+        if st == 'scheduled' and due and due <= t_now:
             flag = 'unconfirmed'
         d['flag'] = flag
         # 失败是否已有替代（同天同账号，同标题/同 payload/同时间，且状态正常）
         d['superseded_by'] = None
-        if b in ('fail', 'warn'):
+        if b in ('fail', 'warn') or (b == 'queue' and flag):
             for o in by_day_slot.get((d.get('day'), d.get('slot')), []):
                 if o['id'] == d['id'] or (o.get('status') in FAIL | WARN | MUTED):
+                    continue
+                if b == 'queue' and o.get('status') not in DONE | {'scheduled'}:
                     continue
                 if (o.get('payload') and o.get('payload') == d.get('payload')) or \
                         (o.get('title') and o.get('title') == d.get('title')) or \
@@ -579,13 +583,19 @@ def zhihu_answers(day):
         title = row.get('问题') or row.get('标题') or (cells[1] if len(cells) > 1 else '')
         n = len(out) + 1
         folder = DAYS / day / f'zhihu-answer-{n}'
+        timing = row.get('时间') or ''
+        note = row.get('备注') or ''
+        scheduled = bool(re.search(r'定时|预排', timing + note)) and not re.search(r'已公开|已发布|已发出|已核验公开', note)
+        tm = re.search(r'\d{2}:\d{2}', timing)
+        due = parse_dt(f'{day}T{tm.group()}:00+08:00') if tm else None
+        bucket = ('queue' if due and due > now() else 'warn') if scheduled else ('done' if url else 'warn')
         out.append({
             'id': f'zhihu-answer-{day}-{n}',
             'day': day, 'slot': 'zhihu', 'pkey': 'zh', 'platform_name': '知乎', 'account_name': '',
             'publish_type': 'answer', 'kind': '回答', 'time': row.get('时间') or '',
-            'title': title, 'column': row.get('栏目') or '', 'url': url, 'status': 'public',
-            'status_label': '已回答', 'bucket': 'done', 'note': row.get('备注') or '',
-            'detail_text': row.get('备注') or '', 'thumb': None, 'flag': None, 'superseded_by': None,
+            'title': title, 'column': row.get('栏目') or '', 'url': url, 'status': 'scheduled' if scheduled else 'public' if url else 'uncertain',
+            'status_label': ('已定时' if bucket == 'queue' else '到点待核实') if scheduled else '已回答' if url else '待核实', 'bucket': bucket, 'note': row.get('备注') or '',
+            'detail_text': row.get('备注') or '', 'thumb': None, 'flag': 'unconfirmed' if bucket == 'warn' else None, 'superseded_by': None,
             'aired': False, 'is_answer': True, 'dir': str(folder) if folder.is_dir() else None,
         })
     return out
@@ -1142,16 +1152,23 @@ def plan_payload():
 
 
 # ---------- 日报 ----------
+def report_path(day):
+    full = REPORTS / f'{day}.full.md'
+    return full if full.is_file() else REPORTS / f'{day}.md'
+
+
 def reports_list():
     out = []
     if not REPORTS.is_dir():
         return out
-    for p in sorted(REPORTS.glob('*.md'), reverse=True):
+    dates = sorted({p.name[:10] for p in REPORTS.glob('*.md') if re.fullmatch(r'\d{4}-\d{2}-\d{2}(?:\.full)?\.md', p.name)}, reverse=True)
+    for day in dates:
+        p = report_path(day)
         t = read_text(p) or ''
         m = re.search(r'^#\s+(.+)$', t, re.M)
         gen = re.search(r'生成时间[:：]\s*([^\n]+)', t)
         warn = len(re.findall(r'⚠️|需要你|请确认', t))
-        out.append({'date': p.stem, 'title': m.group(1).strip() if m else p.stem, 'generated': gen.group(1).strip() if gen else None,
+        out.append({'date': day, 'full_day': p.name.endswith('.full.md'), 'title': m.group(1).strip() if m else p.stem, 'generated': gen.group(1).strip() if gen else None,
                     'updated': mtime_iso(p), 'size': len(t), 'attention': warn})
     return out
 
@@ -1226,12 +1243,12 @@ def overview_payload():
     # 待处理：近 3 天失败/待核实/拦截（未被替代），今天到点未提交/卡住
     cutoff = (now().date() - dt.timedelta(days=2)).isoformat()
     pending, resolved = [], []
-    for i in items:
+    for i in items + answers:
         if (i.get('day') or '') < cutoff:
             continue
         kind = None
         if i['bucket'] in ('fail', 'warn'):
-            kind = i.get('status')
+            kind = i.get('flag') or i.get('status')
         elif i.get('flag'):
             kind = i['flag']
         if not kind:
@@ -1291,6 +1308,10 @@ def overview_payload():
         'hot': {'at': radar['last_at'], 'day': radar['day'], 'total': radar['last_total'], 'new': radar['last_new'],
                 'top': radar['candidates'][:5], 'pick_at': radar['at']} if radar else None,
         'runs': runs,
+        'latest_report': next(iter(reports_list()), None),
+        'sync': read_json(ROOT / '.sync.json', None),
+        'evidence': {'verified': sum(1 for i in today_items + answers if i.get('status') in ('public', 'web') and i.get('url')),
+                     'platform_success': sum(1 for i in today_items if i.get('status') == 'success')},
         'errors': errors,
     }
 
@@ -1648,10 +1669,11 @@ def search_payload(q, limit=12):
 
     def reports():
         out = []
-        for p in sorted(REPORTS.glob('*.md'), reverse=True) if REPORTS.is_dir() else []:
+        for report in reports_list():
+            p = report_path(report['date'])
             t = read_text(p) or ''
-            if ql in p.stem or ql in t.lower():
-                out.append({'date': p.stem, 'snippet': _snippet(t, ql) or (t.strip().splitlines() or [''])[0][:60]})
+            if ql in report['date'] or ql in t.lower():
+                out.append({'date': report['date'], 'snippet': _snippet(t, ql) or (t.strip().splitlines() or [''])[0][:60]})
             if len(out) >= limit:
                 break
         return out
@@ -2304,10 +2326,11 @@ class Handler(BaseHTTPRequestHandler):
             d = route[len('reports/'):]
             if not DAY_RE.match(d):
                 return self._json({'error': '日期格式不对'}, 404)
-            t = read_text(REPORTS / f'{d}.md')
+            p = report_path(d)
+            t = read_text(p)
             if t is None:
                 return self._json({'error': '没有这天的日报'}, 404)
-            return self._json({'date': d, 'html': md(t), 'updated': mtime_iso(REPORTS / f'{d}.md')})
+            return self._json({'date': d, 'html': md(t), 'markdown': t, 'full_day': p.name.endswith('.full.md'), 'updated': mtime_iso(p)})
         if route == 'accounts':
             return self._json(accounts_payload())
         if route == 'meta':

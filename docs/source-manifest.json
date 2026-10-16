@@ -192,6 +192,16 @@
       "mode": "sanitized-source"
     },
     {
+      "path": "scripts/report_email_layout.py",
+      "sha256": "690c131f2cba7bc5f1d375b0d45afb422f97dbddc7b0f655ae95fa1655fa2021",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/report_mail.py",
+      "sha256": "a532d00924a72aa99c708709ed0920b13a8e93dbe5d442523a4a7e6708c99b0a",
+      "mode": "sanitized-source"
+    },
+    {
       "path": "scripts/s2v_avatar.py",
       "sha256": "ce6c1d8ba52df991839f9361af39870a2fbd250e21d22ec2c1939fb4da9fde4e",
       "mode": "sanitized-source"

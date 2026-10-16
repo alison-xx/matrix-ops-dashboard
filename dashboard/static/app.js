@@ -2,6 +2,7 @@
    图表：ECharts 5.6.0；动效：GSAP 3.12.5（都在 static/vendor，本地加载）。
    任一库没加载到，页面照常工作，只是没有图表动画/界面动效。 */
 'use strict';
+const DASH_RELEASE = '2026.10.16-briefing';
 
 /* ---------- 常量 ---------- */
 const PLAT = {
@@ -84,8 +85,8 @@ const mdShort = (iso) => (iso ? `${String(iso).slice(5, 7)}-${String(iso).slice(
 const WD = '日一二三四五六';
 function dayLabel(day) {
   if (!day) return '';
-  const d = new Date(day + 'T00:00:00+08:00');
-  return `${d.getMonth() + 1}月${d.getDate()}日 周${WD[d.getDay()]}`;
+  const d = new Date(day + 'T12:00:00Z');
+  return `${d.getUTCMonth() + 1}月${d.getUTCDate()}日 周${WD[d.getUTCDay()]}`;
 }
 function todayStr() { return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10); }
 function shiftDay(day, k) {
@@ -155,7 +156,8 @@ async function copyText(text, what = '内容') {
 /* 把表格数据导出成 CSV（带 BOM，Excel 直接打开不乱码） */
 function downloadCSV(name, header, rows) {
   const cell = (v) => {
-    const s = v == null ? '' : String(v);
+    const raw = v == null ? '' : String(v);
+    const s = typeof v === 'string' && /^[=+@\-\t\r]/.test(raw) ? "'" + raw : raw;
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   const body = '﻿' + [header, ...rows].map((r) => r.map(cell).join(',')).join('\n');
@@ -210,12 +212,8 @@ const Motion = {
   /* 页面入场：顶层区块依次上浮，总时长封顶 0.35s */
   enter(root) {
     if (!canMove()) return;
-    const blocks = Array.from(root.children).filter((el) => el.offsetParent !== null);
-    play(blocks, { opacity: [0, 1], translate: ['0 12px', '0 0'] }, { duration: 0.55, amount: Math.min(0.35, blocks.length * 0.06) });
-    $$('[data-stagger]', root).forEach((box) => {
-      const kids = Array.from(box.children).slice(0, 24);
-      play(kids, { opacity: [0, 1], translate: ['0 10px', '0 0'] }, { duration: 0.5, delay: 0.08, amount: Math.min(0.4, kids.length * 0.035) });
-    });
+    const first = root.firstElementChild;
+    if (first) play([first], { opacity: [0.65, 1] }, { duration: 0.18 });
   },
   /* 进度条、额度条从左生长 */
   bars(root, delay = 0.15) {
@@ -235,7 +233,7 @@ const Motion = {
     $$('[data-k][data-v]', root).forEach((el) => {
       const k = el.dataset.k, to = +el.dataset.v, d = +el.dataset.d || 0;
       const had = prev && Object.prototype.hasOwnProperty.call(prev, k);
-      const from = had ? prev[k] : (entering ? 0 : to);
+      const from = had ? prev[k] : to;
       if (from === to) return;
       if (had) {
         el.classList.remove('bump');
@@ -468,6 +466,29 @@ function stackbar(c, thin) {
 const cls = (v) => (!isNum(v) ? 'none' : v > 0 ? 'up' : v < 0 ? 'down' : '');
 const sign = (v) => (!isNum(v) ? '—' : v > 0 ? '+' + fmtN(v, 0) : v < 0 ? '−' + fmtN(-v, 0) : '0');
 
+function operationBrief(d) {
+  const p = d.publish;
+  const due = d.timeline.filter((i) => i.bucket === 'queue' && !i.superseded_by && i.time >= hm(d.now)).slice(0, 3);
+  const remaining = d.accounts.reduce((n, a) => n + Math.max(0, a.expected - a.done - a.queue - a.warn), 0);
+  const trouble = d.pending.length;
+  const health = S.health;
+  const stale = health ? health.sources.filter((x) => x.state !== 'ok') : [];
+  const report = d.latest_report;
+  return `<section class="ops-brief sec" aria-label="运营简报">
+    <div class="brief-head"><div><h2>${trouble ? `${trouble} 项发布需要跟进` : remaining ? `还有 ${remaining} 个发布位待安排` : '今天的运营正在推进'}</h2>
+      <p>平台已报成功 ${p.done} 条 · 其中已核验公开 ${d.evidence?.verified ?? '—'} 条 · 待核实 ${p.warn} 条</p></div>
+      <a class="btn" href="#/content?day=${esc(d.today)}">查看今日内容 ${ico('right')}</a></div>
+    <div class="brief-grid">
+      <div class="brief-cell"><div class="brief-label">接下来发布</div>${due.length ? due.map((i) => `<button class="brief-next" type="button" data-item="${esc(i.id)}"><time>${esc(i.time)}</time>${logo(i.pkey)}<span>${esc(i.title || i.account_name)}</span>${ico('right')}</button>`).join('') : '<p class="brief-empty">今天没有后续排队条目，查看日历确认明日排期。</p>'}</div>
+      <div class="brief-cell"><div class="brief-label">数据状态 <button class="linkish" type="button" data-health-open>查看详情</button></div>
+        <p class="brief-state">${health ? stale.length ? `${stale.length} 个数据源需要检查` : '数据按预期更新' : '正在检查数据源'}</p>
+        <p class="brief-empty">${d.sync ? `手机站数据同步于 ${esc(mdShort(d.sync.at))} ${esc(hm(d.sync.at))}，页面每分钟刷新。` : '页面每分钟刷新；平台采集与手机站数据同步有各自周期。'}${stale.length ? `<br>${stale.slice(0, 3).map((x) => esc(x.label)).join('、')}` : ''}</p></div>
+      <div class="brief-cell"><div class="brief-label">运营日报</div><p class="brief-state">${report ? `${esc(dayLabel(report.date))}${report.full_day ? ' · 全天报告' : ' · 晚间复盘'}` : '还没有日报'}</p>
+        <p class="brief-empty">完整报告覆盖前一天 00:00–24:00。指标按采集时间呈现，缺失数据不会计作零。</p>
+        <a class="brief-link" href="#/reports${report ? '/' + esc(report.date) : ''}">阅读日报 ${ico('right')}</a></div>
+    </div></section>`;
+}
+
 function renderOverview(d) {
   updateBadge(d.pending.length);
   paintBrand(d.accounts);
@@ -532,7 +553,7 @@ function renderOverview(d) {
     ? `<section class="panel alert sec" aria-label="待处理">
         <div class="panel-h"><h2>待处理 ${cnt('pending_n', d.pending.length)}</h2><span class="meta">近 3 天发布失败、待核实，以及今天到点还没提交的条目${d.pending_items > d.pending.length ? `（${d.pending_items} 条台账记录，同一内容的多次尝试已合并）` : ''}</span>
           <span class="right">${Object.entries(rsum).map(([k, v]) => `<span class="rtag">${esc(k)} ${v}</span>`).join('')}<a href="#/calendar">失败原因统计</a></span></div>
-        ${d.pending.map((r) => alertRow(r)).join('')}${resolvedBlock}</section>`
+        ${d.pending.slice(0, 3).map((r) => alertRow(r)).join('')}${d.pending.length > 3 ? `<details class="resolved" data-k-open="ov-pending"><summary>展开其余 ${d.pending.length - 3} 项待处理</summary>${d.pending.slice(3).map((r) => alertRow(r)).join('')}</details>` : ''}${resolvedBlock}</section>`
     : `<section class="panel sec"><div class="alert-ok"><span class="g">✓</span>没有待处理事项。近 3 天没有失败或待核实的发布。</div>${resolvedBlock}</section>`;
 
   const cards = d.accounts.map((a) => {
@@ -591,7 +612,7 @@ function renderOverview(d) {
       </div>
     </section>`;
 
-  return `${errNote(d.errors)}${hero}${pending}
+  return `${errNote(d.errors)}${operationBrief(d)}${pending}${hero}
     <div class="sec"><div class="sec-h"><h2>账号</h2><span class="meta">${d.accounts.length} 个发布位，点卡片看详情；粉丝历史满 2 天后卡片里画走势</span></div>
       <div class="acc-grid" data-stagger style="--n:${balancedCols(d.accounts.length)}">${cards}</div></div>
     ${rundown(d)}
@@ -1439,7 +1460,7 @@ function renderReports(d) {
   const list = reps.map((r) => `<button type="button" data-go="reports/${esc(r.date)}" aria-pressed="${r.date === d.date}">
     <div class="d num">${esc(dayLabel(r.date))}</div><div class="s">${r.generated ? `生成于 ${esc(r.generated)}` : ''}${r.attention ? `，${r.attention} 处需要你看` : ''}</div></button>`).join('');
   const body = d.rep && d.rep.html ? doc(d.rep.html) : `<section class="panel rep-body">${empty(`读取失败：${esc(d.rep && d.rep.error)}`)}</section>`;
-  return `${errNote(d.errors)}<div class="rep-layout"><nav class="panel rep-list" aria-label="日报列表">${list}</nav>${body}</div>`;
+  return `${errNote(d.errors)}<div class="report-tools sec"><div><b>${d.rep?.full_day ? '全天运营报告' : '晚间运营复盘'}</b><span> ${esc(d.date)} · 北京时间${d.rep?.full_day ? ' 00:00–24:00' : ''}</span></div><button class="btn" type="button" data-download-report ${d.rep?.markdown ? '' : 'disabled'}>${ico('download')}下载报告</button></div><div class="rep-layout"><nav class="panel rep-list" aria-label="日报列表">${list}</nav>${body}</div>`;
 }
 function doc(html) {
   return `<div class="doc-layout"><section class="panel rep-body"><div class="md reader" data-toc>${html}</div></section><nav class="toc" aria-label="目录"></nav></div>`;
@@ -1488,7 +1509,7 @@ const PAGE_IMPL = {
     },
     render: renderPlan, ctx: () => '手册、计划、实验和进化',
   },
-  reports: { load: loadReports, render: renderReports, ctx: () => '每日 23:00 生成' },
+  reports: { load: loadReports, render: renderReports, ctx: () => '晚间复盘与全天报告' },
 };
 
 /* ---------- 加载与刷新 ---------- */
@@ -1502,7 +1523,7 @@ async function load(navigated) {
   $('#pageTitle').textContent = name;
   document.title = `${name} · ${(S.meta && S.meta.title) || '运营工作台'}`;
   setSpinning(true);
-  loadHealth();
+  const healthReady = loadHealth();
   let skTimer = null;
   if (navigated) {
     window.scrollTo(0, 0);
@@ -1517,7 +1538,7 @@ async function load(navigated) {
   }
   let d;
   try {
-    d = await impl.load();
+    [d] = await Promise.all([impl.load(), healthReady]);
   } catch (e) {
     clearTimeout(skTimer);
     if (seq !== loadSeq) return;
@@ -1525,7 +1546,7 @@ async function load(navigated) {
     setRefresh(false, e.message);
     if (navigated || !page.dataset.page) {
       disposeCharts(page);
-      page.innerHTML = `<section class="panel">${empty(`<b>读取失败：${esc(e.message)}</b><br>确认本地服务还在运行（<code>python dashboard/server.py</code>），然后点右上角刷新。`)}</section>`;
+      page.innerHTML = `<section class="panel">${empty(`<b>读取失败：${esc(e.message)}</b><br>检查网络连接后重试；若登录已过期，请重新登录。<br><button class="btn" type="button" data-retry-load>重新加载</button>`)}</section>`;
     }
     return;
   }
@@ -1697,7 +1718,7 @@ async function loadHealth() {
 function renderHealthPop() {
   const h = S.health;
   if (!h) return;
-  $('#healthPop').innerHTML = `<div class="hp-h"><b>数据源</b><span class="muted small">工作台只读这些文件，过期说明对应的定时任务没跑或跑失败了</span></div>
+  $('#healthPop').innerHTML = `<div class="hp-h"><b>数据源</b><span class="muted small">工作台只读这些文件，过期可能来自采集延迟、电脑休眠或任务异常，按提示核查</span></div>
     ${h.sources.map((x) => `<div class="hp-row ${x.state}"><span class="dot"></span><div><div class="hp-t">${esc(x.label)}<span class="muted small">${x.key === 'manual' ? '' : x.state === 'missing' ? '没有数据' : esc(ago(x.age_min)) + '更新'}${x.expect_min && x.key !== 'manual' ? `，预期 ${x.expect_min >= 120 ? Math.round(x.expect_min / 60) + ' 小时' : x.expect_min + ' 分钟'}内` : ''}</span></div>
       <div class="hp-d">${esc(x.hint)}</div></div></div>`).join('')}`;
 }
@@ -1828,6 +1849,18 @@ document.addEventListener('click', (ev) => {
   if (t.id === 'palette') { closePalette(); return; }
   if (t.closest('[data-help]')) { openHelp(); return; }
   if (t.closest('[data-close-modal]') || t.id === 'helpModal') { closeHelp(); return; }
+  if (t.closest('[data-retry-load]')) { load(false); return; }
+  if (t.closest('[data-health-open]')) { toggleHealth(true); return; }
+  if (t.closest('[data-download-report]')) {
+    const r = S.data.reports?.rep;
+    if (r?.markdown) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([r.markdown], { type: 'text/markdown;charset=utf-8' }));
+      a.download = `运营报告-${r.date}.md`; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+    return;
+  }
   if (t.closest('#healthChip')) { toggleHealth(); return; }
   if (!t.closest('#healthPop') && !$('#healthPop').hidden) toggleHealth(false);
   if (t.closest('[data-more]')) { $('#sheet').classList.contains('open') ? closeSheet() : openSheet(); return; }
@@ -1996,6 +2029,7 @@ window.addEventListener('hashchange', () => {
   load(true);
 });
 $('#refreshBtn').addEventListener('click', () => load(false));
+window.addEventListener('online', () => load(false));
 $('#themeBtn').addEventListener('click', cycleTheme);
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && S.lastOk && Date.now() - S.lastOk.getTime() > 60000) load(false);
