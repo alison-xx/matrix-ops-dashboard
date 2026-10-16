@@ -236,6 +236,8 @@ def submit(c, iid, from_dispatch=False):
     r = c.execute('SELECT * FROM items WHERE id=?', (iid,)).fetchone()
     if not r or r['status'] != 'ready':
         raise ValueError(f'{iid} 不是 ready，阻止重复提交')
+    if SCHED['accounts'].get(r['slot'], {}).get('publish_via') == 'email':
+        raise ValueError('此平台已改为邮件交付、本人手动发布；请运行 publication_mail.py，禁止平台自动提交')
     if r['slot'] == 'x':
         from x_api import submit as x_submit
         return x_submit(c, iid)

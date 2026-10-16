@@ -20,7 +20,8 @@
     "12:30",
     "18:30"
    ],
-   "account_id": "demo-channels"
+   "account_id": "demo-channels",
+   "publish_via": "email"
   },
   "bilibili": {
    "platform": "哔哩哔哩",

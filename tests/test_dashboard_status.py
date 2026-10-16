@@ -6,6 +6,11 @@ s = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s)
 
 class PublicationEvidence(unittest.TestCase):
+    def test_material_email_is_waiting_for_operator_not_published(self):
+        item = s.enrich_items([{'id':'mail','status':'manual_pending','mode':'email'}], {})[0]
+        self.assertEqual(item['bucket'], 'warn')
+        self.assertEqual(item['status_label'], '待本人手动发布')
+
     def test_elapsed_schedule_still_needs_confirmation(self):
         rows = [{'id': 'scheduled', 'status': 'scheduled', 'day': '2020-01-01', 'due': '2020-01-01T09:00:00+08:00', 'slot': 'demo'}]
         item = s.enrich_items(rows, {})[0]

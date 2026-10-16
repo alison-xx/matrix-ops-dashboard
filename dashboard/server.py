@@ -351,9 +351,10 @@ def slot_for_metrics(platform, account):
 DONE = {'success', 'public', 'web'}
 QUEUE = {'draft', 'checked', 'ready', 'submitting', 'submitted', 'scheduled', 'web_pending', 'publishing'}
 FAIL = {'failed', 'blocked'}
-WARN = {'uncertain'}
+WARN = {'uncertain', 'manual_pending'}
 MUTED = {'platform_draft', 'deleted_dup', 'withdrawn'}
 STATUS_LABEL = {
+    'manual_pending': '待本人手动发布',
     'draft': '草稿', 'checked': '已检查', 'ready': '待提交', 'submitting': '提交中', 'submitted': '已提交',
     'scheduled': '已定时', 'success': '发布成功', 'public': '已公开', 'web': '网页已发', 'platform_draft': '平台草稿箱',
     'blocked': '被拦截', 'failed': '失败', 'uncertain': '待核实', 'deleted_dup': '已删重复', 'withdrawn': '已撤销', 'web_pending': '待网页发表', 'publishing': '网页发布中',

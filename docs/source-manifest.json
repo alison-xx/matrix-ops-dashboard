@@ -168,7 +168,7 @@
     },
     {
       "path": "scripts/ops.py",
-      "sha256": "562cb2009b9e70e74e04546f508cb921396be538431e9f8ed078b7e5fc226adb",
+      "sha256": "9a5cc1b019339bbe0b73d1eb57083ec856cdc1f6b09e8c77da9ae8bfa9681c4f",
       "mode": "sanitized-source"
     },
     {
@@ -179,6 +179,11 @@
     {
       "path": "scripts/playbook.py",
       "sha256": "fb5424fec82025cd74e2e9118ca7fa774835c07c084a877e2f11b3cefdc958ba",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/publication_mail.py",
+      "sha256": "7b69875dbff326f8ec8ea05dfa2312ded46187cc65579ffca327995c0bbee9d6",
       "mode": "sanitized-source"
     },
     {
