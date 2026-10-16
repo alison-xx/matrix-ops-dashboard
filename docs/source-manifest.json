@@ -2,6 +2,11 @@
   "description": "脱敏源代码清单；真实运营数据和第三方技能原文不在此清单。",
   "files": [
     {
+      "path": "scripts/ai_video.py",
+      "sha256": "9952fe74dfca64526c1e3ed0eaf07bea451e4fadbb9e86e56d7876f7e5d1d2f6",
+      "mode": "sanitized-source"
+    },
+    {
       "path": "scripts/alert_mail.py",
       "sha256": "ce12b56b7ae6b05ca380cd3d5c3bd46e264a7dd1befc40c775a56728e7c43eaf",
       "mode": "sanitized-source"
@@ -153,7 +158,7 @@
     },
     {
       "path": "scripts/make_motion.py",
-      "sha256": "7433071c179432b5c16f422a5b385925797a3a57ed82c8a763062fae329c3a0e",
+      "sha256": "49126c7b160fa583cb39cfd875e274b622ca2d6a64ab55dcea8e9e8c847c06bc",
       "mode": "sanitized-source"
     },
     {
@@ -183,7 +188,7 @@
     },
     {
       "path": "scripts/playbook.py",
-      "sha256": "fb5424fec82025cd74e2e9118ca7fa774835c07c084a877e2f11b3cefdc958ba",
+      "sha256": "f592f469f1b462ed660c08280e2c496a90547521682b2ade793e1793fcdaf14c",
       "mode": "sanitized-source"
     },
     {
@@ -259,6 +264,11 @@
     {
       "path": "scripts/topics.py",
       "sha256": "5ff88f74a88888776106acd060c39ca0d79bc8284d81ab9447a81eb48603395d",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/video_scene.py",
+      "sha256": "66fb96d28da48fd296c939a3e362647b4050ea3b41caca5f49896a1b3459c978",
       "mode": "sanitized-source"
     },
     {

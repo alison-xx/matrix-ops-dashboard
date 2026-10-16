@@ -172,7 +172,7 @@ def times_check(files):
                     continue
                 for m in re.finditer(rf'(?<![\u4e00-\u9fa5]){label}\s*((?:\d{{2}}:\d{{2}}\s*[、/，,]?\s*)+)', ln):
                     for hm in re.findall(r'\d{2}:\d{2}', m.group(1)):
-                        if hm not in sched[slot]['times']:
+                        if hm not in (sched[slot]['times'] + sched[slot].get('extra_slots', {}).get('times', []) + sched[slot].get('hot_extra_times', [])):
                             errs.append(f'{rel}:{i} 时段对不上：{label} {hm} 不在 config/schedule.json（现在是 {"、".join(sched[slot]["times"])}）')
     return errs
 

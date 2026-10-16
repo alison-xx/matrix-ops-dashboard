@@ -14,6 +14,7 @@
   chat     AI 对话实测：model(模型名)、ask(提问)、reply(AI 回答原文摘录，≤90字)、verdict(可选印章，如"能用"/"翻车")、good(印章颜色)
   chapter  章节卡（长视频分段用）：n(第几步/第几点)、title、sub(可选)
   bars     条形对比/排行：heading、items[{label,value,display(可选显示文字)}]、unit、best(高亮第几项，从0起，可选)
+  video    本地动态素材：video(本地绝对路径)、source_kind(ai/real)、trim_start(秒)、headline；AI需同名.review.json签核
   screen   真实截图（实测时截的软件界面）：image(路径)、focus[x,y,w,h](0-1 比例，推近+黄框高亮，可选)、step(如"第2步")、caption
   ---- 10-16 新增（动效移植自 HyperFrames 官方 registry，全部本地 GSAP + 内联 SVG/CSS，不联网）----
   highlight 关键词马克笔划重点（registry: marker-highlight）：一句大字先上屏，念到关键词时一笔划过去。
@@ -660,6 +661,9 @@ MARKS = {
 def scene_html(sc, i, work):
     t = sc.get('type', 'image')
     sid = f's{i}'
+    if t == 'video':
+        from video_scene import scene
+        return scene(sc, i, work)
     if t == 'hook':
         def hk_row(row):   # **词** 标黄（第二行的数字/反差词用强调色，第 0 帧就抓眼）
             out, bold = [], False
@@ -981,6 +985,8 @@ def scene_js(sc, i):
         js.append(f'tl.fromTo("{sid} .cta-text",{{opacity:0,y:40}},{{opacity:1,y:0,duration:.55,ease:"power3.out"}},{s+.1:.3f});')
         js.append(f'tl.fromTo("{sid} .cta-hint",{{opacity:0,y:24}},{{opacity:1,y:0,duration:.45,ease:"power3.out"}},{s+.6:.3f});')
         js.append(f'tl.fromTo("{sid} .arrow",{{opacity:0,y:-20}},{{opacity:1,y:0,duration:.5,ease:"power3.out"}},{s+.9:.3f});')
+    elif t == 'video':
+        pass  # HyperFrames seeks the local video via data-start; no fake Ken Burns.
     else:  # image：Ken Burns 放在子元素 img 上，入场动画在父元素 .inner 上，两个 transform 不打架
         js.append(f'tl.fromTo("{sid}-img",{{scale:1.08,xPercent:{-1.5 if i % 2 else 1.5}}},{{scale:1.0,xPercent:0,duration:{d:.2f},ease:"none"}},{s:.3f});')
         js.append(f'tl.fromTo("{sid} .sweep",{{xPercent:-160}},{{xPercent:260,duration:1.2,ease:"power2.inOut"}},{s+.4:.3f});')
@@ -1014,6 +1020,8 @@ html,body{width:100%;height:100%;background:var(--bg1);font-family:NS;color:#fff
 .pill{display:inline-block;background:var(--accent);color:#111;font-weight:900;font-size:50px;padding:10px 34px;border-radius:18px}
 em{font-style:normal;color:var(--accent)}
 .inner.hook.first{top:300px;height:950px}
+.inner.footage{top:500px;height:760px}
+.footage .img-head{position:absolute;bottom:20px;background:rgba(0,0,0,.75);padding:12px 24px;font-size:40px;border-radius:12px}
 .hook .hk-big{display:flex;flex-direction:column;align-items:center}
 .hook .hk-row{display:flex;justify-content:center;font-size:150px;font-weight:900;line-height:1.15;text-shadow:0 10px 40px rgba(0,0,0,.6)}
 .hook .hk-ch{display:inline-block}
@@ -1192,6 +1200,9 @@ def check_timing(spec):
 def build(spec_path, draft=False, render=True, check_only=False):
     spec_path = pathlib.Path(spec_path).resolve()
     spec = json.loads(spec_path.read_text())
+    for sc in spec.get('scenes', []):
+        if sc.get('type') == 'video' and sc.get('video'):
+            sc['video'] = str((spec_path.parent / sc['video']).resolve())
     import edit_fx
     edit_fx.ensure_follow_line(spec)   # 片尾统一引导关注：cta 里没提关注就补一句带理由的引导
     style = None
