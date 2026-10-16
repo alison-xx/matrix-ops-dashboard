@@ -72,6 +72,11 @@
       "mode": "sanitized-source"
     },
     {
+      "path": "scripts/creator_watch.py",
+      "sha256": "dc0f23b632e3f089dbb8a45d0d0cf126bfe5636a0b9a6f6799e76c5f77b89bb6",
+      "mode": "sanitized-source"
+    },
+    {
       "path": "scripts/daily_report.py",
       "sha256": "412bf1f28b1405298480c064ce52445e4f38127912e0b290a7d6a41e5883c913",
       "mode": "sanitized-source"

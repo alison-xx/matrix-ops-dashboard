@@ -1,0 +1,19 @@
+{
+  "enabled": false,
+  "max_calls_per_run": 20,
+  "max_cost_usd_per_day": 1.0,
+  "lookback_hours": 72,
+  "authors": [
+    {
+      "key": "douyin:demo-creator",
+      "name": "示例AI讲解作者",
+      "platform": "douyin",
+      "endpoint": "/api/v1/douyin/app/v3/fetch_user_post_videos",
+      "method": "GET",
+      "params": {"sec_user_id": "REPLACE_WITH_VERIFIED_CREATOR_ID", "count": 20, "max_cursor": 0},
+      "interval_minutes": 30,
+      "cost_usd": 0.001,
+      "enabled": false
+    }
+  ]
+}
