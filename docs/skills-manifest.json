@@ -340,7 +340,8 @@
       "license": "MIT; bundled pyJianYingDraft Apache-2.0",
       "note": "Install from original upstream. Local draft creation, macOS native import/playback/GUI export and final-file QC verified in a scoped test. Each new export still requires independent validation. Portrait normalization, sample-rate and tail-frame compatibility notes: jianying-editing.md. Upstream text and private media not bundled.",
       "available_at_snapshot": true,
-      "workflow": "jianying-editing.md"
+      "workflow": "jianying-editing.md",
+      "tree_sha256": "41f5380e4503f7717e05f65fe7a2edb64c22afde7c1cc8d897563446ce3ac139"
     }
   ]
 }
