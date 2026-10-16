@@ -53,3 +53,9 @@ SkillHub 来源可使用 `skillhub --skip-self-upgrade --dir /path/to/skills ins
 对于会把检索词发给外部服务的技能，优先使用其明确支持的本地模式；不要将稿件、账号或凭据作为检索词发送。第三方技能的推广、默认人设、发布时间、付费调用及要求停顿的交互策略，不自动覆盖使用者的运营规则。
 
 完整机器可读清单见 [skills-manifest.json](skills-manifest.json)。
+
+## 技能与两站的配合
+
+从 [灵策AI热点](https://aihot.lynxce.cn/) 获取候选与原文，在 [灵策 Web](https://web.lynxce.cn/) 注册登录后写稿与制作素材。Agent 用技能组织这些任务：aihot 辅助信息发现，human-writing 起草，平台技能适配，humanizer-zh 改稿，再执行逐平台用词复核。不要把工具生成结果当成已经审核或公开。
+
+AIHOT 当前接入方式见 [Agent 页](https://aihot.lynxce.cn/agent)；使用已有 aihot 技能时，应核对它支持的服务地址，不把上游 aihot.news 的默认地址当作已经接入此站。可以按 [workflow.md](workflow.md) 直接配置灵策AI热点 MCP 或本地雷达的 `AIHOT_API_BASE`。

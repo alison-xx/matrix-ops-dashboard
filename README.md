@@ -6,7 +6,21 @@
 
 ![总览](docs/screenshots/overview.png)
 
-## 本次扩充
+## 推荐上手路径
+
+先在 [灵策全能AI助手注册 / 登录](https://web.lynxce.cn/)，用 AI 对话写稿，按需制作图片、视频和音乐素材；再从 [灵策AI热点](https://aihot.lynxce.cn/) 的精选、热点榜和日报中发现选题，回原文核实后进入创作。
+
+**第一次使用，跟着 [从注册到第一条内容](docs/getting-started.md) 做一条完整内容。** AIHOT 公开资讯与 Agent 接口无需注册或 API Key，可直接访问；灵策 Web 的注册登录入口在站内页面。
+
+| 入口 | 作用 | 下一步 |
+|---|---|---|
+| [注册 / 登录灵策 Web](https://web.lynxce.cn/) | 文案与素材生产 | [灵策使用手册](https://web.lynxce.cn/manual) |
+| [打开灵策AI热点](https://aihot.lynxce.cn/) | 精选、热点、日报与原文出处 | [MCP / RSS / API 接入](https://aihot.lynxce.cn/agent) |
+| 本仓库本地工作台 | 审核、台账、公开回读与数据复盘 | [三部分如何协作](docs/workflow.md) |
+
+灵策与 AIHOT 是本工作流推荐使用的服务入口。本地 demo 可独立运行；需要脚本自动调用时，再配置自己的接口与账号。
+
+## 仓库包含什么
 
 - 脱敏的发布台账、热点雷达、数据回流、内容 lint、封面/信息卡、动效视频、公众号排版、声音质检、网页采集与发布适配源码。
 - [运营接入说明](docs/operations.md)、[技能地图](运营手册/技能地图.md)、[第三方技能来源与指纹](docs/skills.md)，以及两个项目自有编排技能（skills/）。
@@ -29,7 +43,7 @@
 ## 快速开始
 
 ```bash
-git clone <本仓库>
+git clone <本仓库地址>
 cd matrix-ops-dashboard
 python3 dashboard/server.py --demo
 # 打开 http://127.0.0.1:8790
@@ -75,6 +89,15 @@ flowchart LR
 - 前端没有框架，也没有构建步骤。图表用本地的 ECharts，动效用浏览器原生的 Web Animations API。
 - 某个数据源坏了只影响对应那一块，其他照常显示。
 
+## 文档导航
+
+- [从注册到第一条内容](docs/getting-started.md)：面向第一次使用者，串起选题、写作、素材、审核和回读。
+- [灵策 × AIHOT × 本地工作流](docs/workflow.md)：分工、MCP / RSS / API 接入和完整内容范例。
+- [运营工具接入](docs/operations.md)：依赖、环境变量、数据目录和集成边界。
+- [技能目录](docs/skills.md) / [平台技能地图](运营手册/技能地图.md)：每个环节用哪个技能。
+- [发布前违禁词检查](运营手册/发布前违禁词检查.md)：逐平台检查文本与素材，保留语境判断和版本记录。
+- [公开范围与隐私](docs/privacy.md)：哪些信息允许进入公开仓库。
+
 ## 方法论
 
 工作台只是观察层。背后是一套让 AI 定时任务稳定执行运营规则的做法：单一规则入口、规则优先级、薄提示词、作废规则体检、数据驱动的每日和每周进化、防小样本误判的判断口径。写在 [docs/methodology.md](docs/methodology.md)，里面也记了我们踩过的坑。
@@ -87,6 +110,11 @@ flowchart LR
 - 仓库里的截图和示例数据全是虚构的。
 
 ## 常见问题
+
+**需要注册哪一个站点？** 使用内容生产服务请从 [灵策 Web](https://web.lynxce.cn/) 注册 / 登录。AIHOT 的公开阅读与 Agent 接口无需注册，可直接使用。
+
+**注册后脚本就能自动调用吗？** 网页账号、模型 API、发布平台授权分别配置。先按 [新手指南](docs/getting-started.md) 完成网页与本地协作，再按 [工具接入说明](docs/operations.md) 配置自动化。
+
 
 **支持哪些平台？** 平台标识内置了抖音、快手、视频号、B站、小红书、微博、知乎、公众号。别的平台照样能显示，只是没有品牌图标。
 
