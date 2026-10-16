@@ -17,6 +17,8 @@
 """
 import difflib, json, pathlib, re, subprocess, sys, tempfile
 
+from pronunciation import spec_lines, spoken_text, inspect_text
+
 WHISPER = '/opt/homebrew/bin/whisper-cli'
 MODEL = pathlib.Path.home() / '.cache/hyperframes/whisper/models/ggml-medium.bin'
 MIN_COVER = 0.75
@@ -70,11 +72,7 @@ def cjk(s):
 
 
 def script_text(spec):
-    lines = []
-    for sc in spec.get('scenes', []):
-        for ln in sc.get('lines', []):
-            lines.append(re.sub(r'\[停[\d.]+\]|\*\*', '', ln))
-    return ''.join(lines)
+    return ''.join(spoken_text(text) for _, _, text in spec_lines(spec))
 
 
 def transcribe(path, chunk=15):
@@ -129,6 +127,10 @@ def check(mp4, spec_path=None):
         errs.append(f'片中有 {len(sil)} 段超过 2.5 秒的静音：{sil[:3]}')
     if spec_path.exists() and MODEL.exists():
         spec = json.loads(spec_path.read_text())
+        info['pronunciation_review'] = [dict(scene=si, line=li, **inspect_text(text))
+            for si, li, text in spec_lines(spec) if inspect_text(text)['review'] or inspect_text(text)['rewritten']]
+        if info['pronunciation_review']:
+            warns.append('含发音改写或多音字：按 pronunciation_review 逐句听检；ASR 不证明读音正确')
         heard = transcribe(mp4)
         cov = coverage(script_text(spec), heard)
         if cov is not None and cov < 0.80:

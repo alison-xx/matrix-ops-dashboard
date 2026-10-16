@@ -55,6 +55,7 @@ v2（10-16）新增：
 import html, json, math, os, pathlib, re, shutil, subprocess, sys, unicodedata
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import ROOT, gen_image, tts, probe_duration
+from pronunciation import audio_cache_key
 
 HF_VERSION = '0.8.162'
 TPL = ROOT / 'templates/hf/assets'
@@ -366,7 +367,7 @@ def _tts_cached(text, voice, rate, cache_dir, instructions=None):
     import hashlib
     bl = str(voice).startswith('bailian-clone:')   # 百炼直连 10-16 起回 48kHz WAV、音量 30 防削波（旧缓存是 22kHz mp3 / 会削波，换 key 不复用）
     wav = bl or str(voice).startswith('bailian:')   # 晨煦（百炼 qwen3-tts）也存无损 WAV，不过 mp3
-    h = hashlib.md5(f'{voice}|{rate}|{instructions or ""}|{text}{"|wav48v30" if bl else ""}'.encode()).hexdigest()[:16]
+    h = audio_cache_key(text, voice, rate, (instructions or "") + ("|wav48v30" if bl else ""))
     f = cache_dir / (f'{h}.tts.wav' if wav else f'{h}.mp3')
     if not f.exists():
         tts(text, f, voice=voice, rate=rate, instructions=instructions)

@@ -8,6 +8,7 @@ import json, math, pathlib, subprocess, sys, textwrap
 from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import font, gen_image, tts, probe_duration, ROOT
+from pronunciation import audio_cache_key
 
 W, H, FPS = 1080, 1920, 25
 YELLOW = (255, 214, 10)
@@ -181,9 +182,9 @@ def build_audio(spec, workdir):
     for si, sc in enumerate(spec['scenes']):
         s_start = t
         for line in sc['lines']:
-            f = workdir / 'audio' / f'{li:03d}.mp3'
             say = line.get('say') if isinstance(line, dict) else line
             show = line.get('show', say) if isinstance(line, dict) else line
+            f = workdir / 'audio' / f'{li:03d}-{audio_cache_key(say, voice, rate)}.mp3'
             if not f.exists():
                 tts(say, f, voice=voice, rate=rate)
             dur = probe_duration(f)

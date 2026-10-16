@@ -13,7 +13,7 @@
     },
     {
       "path": "scripts/audio_qc.py",
-      "sha256": "f20e75509f53d11d982817997f3fe69a84f0ef11bb124e1f1bc80cd6e29d01c1",
+      "sha256": "71da2eb302feb2a18bcc09ed33d80d760cafd3815b74db91c24c699d31ac5561",
       "mode": "sanitized-source"
     },
     {
@@ -53,7 +53,7 @@
     },
     {
       "path": "scripts/common.py",
-      "sha256": "899939d9cafeb6604cd65b14a9b8d7c6f46893dc3766722f172b049fcc1932a5",
+      "sha256": "95f215e341a73d2152608731fc42ed35e8bea765bb9526271cc48cddb3594f09",
       "mode": "sanitized-source"
     },
     {
@@ -153,7 +153,7 @@
     },
     {
       "path": "scripts/make_motion.py",
-      "sha256": "1c0e4b0864b816c67223befc7c687ae4b3cd804957259eccc8768b2d32ff4966",
+      "sha256": "7433071c179432b5c16f422a5b385925797a3a57ed82c8a763062fae329c3a0e",
       "mode": "sanitized-source"
     },
     {
@@ -163,7 +163,7 @@
     },
     {
       "path": "scripts/make_video.py",
-      "sha256": "7db610d1bc8d2109e50f51fbe54e30431b456b2a89904ee23b71c4e25757031b",
+      "sha256": "67bd18708c2e1ec3bc7adcf37eb71d14c65bebc4f83d02785d95d1ea624c7cf3",
       "mode": "sanitized-source"
     },
     {
@@ -173,7 +173,7 @@
     },
     {
       "path": "scripts/ops.py",
-      "sha256": "9a5cc1b019339bbe0b73d1eb57083ec856cdc1f6b09e8c77da9ae8bfa9681c4f",
+      "sha256": "ebb372da53c3a6565ef0328579a943636bcc7adc2703be026cdd7460fc85d431",
       "mode": "sanitized-source"
     },
     {
@@ -184,6 +184,11 @@
     {
       "path": "scripts/playbook.py",
       "sha256": "fb5424fec82025cd74e2e9118ca7fa774835c07c084a877e2f11b3cefdc958ba",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/pronunciation.py",
+      "sha256": "1a4e4e3e2462bd98346b1e7e30604c4b535cb23329e26d9ff30129d0ae7e032f",
       "mode": "sanitized-source"
     },
     {

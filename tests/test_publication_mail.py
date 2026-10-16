@@ -71,4 +71,16 @@ class PublicationMailTests(unittest.TestCase):
                 self.assertEqual(c.execute("SELECT status FROM items WHERE id='item'").fetchone()[0],'ready')
                 c.close()
 
+    def test_web_route_blocks_cli_before_any_submission(self):
+        from unittest.mock import patch
+        import ops
+        with tempfile.TemporaryDirectory() as d:
+            with patch.object(ops, 'DB', Path(d)/'ops.sqlite3'):
+                c=ops.connect()
+                c.execute("INSERT INTO items(id,slot,status) VALUES('web-item','kuaishou','ready')")
+                with patch.dict(ops.SCHED['accounts'], {'kuaishou':{'publish_via':'web'}}), patch.object(ops,'cli',side_effect=AssertionError('must not send')):
+                    with self.assertRaisesRegex(ValueError,'网页'):
+                        ops.submit(c,'web-item')
+                c.close()
+
 if __name__=='__main__':unittest.main()

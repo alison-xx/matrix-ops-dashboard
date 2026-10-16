@@ -1,6 +1,7 @@
 """示例作者运营工具的公共函数：路径、密钥、出图、对话、配音、字体。"""
 import asyncio, base64, json, os, pathlib, re, subprocess, sys, time, urllib.error, urllib.request, datetime as dt
 from zoneinfo import ZoneInfo
+from pronunciation import spoken_text
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 TZ = ZoneInfo('Asia/Shanghai')
@@ -276,6 +277,7 @@ def tts_provider(text, out, voice='Ethan', speech_rate=0, provider='bailian-qwen
 
 def tts(text, out, voice=VOICE, rate='+6%', pitch='+0Hz', instructions=None):
     """单句合成，返回时长。voice 前缀：provider:<音色> 走示例服务配音；bailian:<音色> 走百炼直连；其他为 edge-tts（默认禁用）。"""
+    text = spoken_text(text)
     if str(voice).startswith('bailian-clone:'):   # 百炼直连复刻（10-16 起默认）：支持情感指令 instruction + SSML 停顿
         m = re.match(r'([+-]?\d+)%', str(rate or '0%'))
         vid = voice.split(':', 1)[1] or env().get('BAILIAN_CLONE_VOICE')

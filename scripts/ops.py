@@ -238,6 +238,8 @@ def submit(c, iid, from_dispatch=False):
         raise ValueError(f'{iid} 不是 ready，阻止重复提交')
     if SCHED['accounts'].get(r['slot'], {}).get('publish_via') == 'email':
         raise ValueError('此平台已改为邮件交付、本人手动发布；请运行 publication_mail.py，禁止平台自动提交')
+    if SCHED['accounts'].get(r['slot'], {}).get('publish_via') == 'web':
+        raise ValueError('此平台当前使用网页发布；禁止经已隔离的 CLI 通道提交，请保留原单并走网页查重发布')
     if r['slot'] == 'x':
         from x_api import submit as x_submit
         return x_submit(c, iid)
