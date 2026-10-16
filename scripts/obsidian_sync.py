@@ -80,14 +80,36 @@ def run(root, config):
                     return '[' + m.group(1) + '](' + resolved.as_uri() + ('#' + anchor if anchor else '') + ')'
                 return m.group(0)
             content = re.sub(r'(?<!!)\[([^\]\n]+)\]\(([^)\n]+)\)', link, content)
-            header = ('---\n' + 'source: ' + json.dumps(str(src.relative_to(root)), ensure_ascii=False)
-                      + '\nsource_modified: ' + json.dumps(datetime.fromtimestamp(src.stat().st_mtime, timezone.utc).isoformat())
-                      + '\nsync_managed: true\n---\n\n')
-            note = '> 自动同步副本；执行以最新入口及运营计划为准，历史记录不代表当前平台状态。个人批注请放在同步目录外。\n\n'
-            expected[rel.as_posix()] = header + note + content
-        links = ['# 全库索引', '', '按源文件自动更新；历史资料保留其日期和适用范围。', '']
+            # Wiki aliases contain a pipe, which must be escaped inside Markdown tables.
+            content = '\n'.join(re.sub(r'\[\[([^\]\n]+)\]\]', lambda m: '[[' + re.sub(r'(?<!\\)\|', r'\\|', m.group(1)) + ']]', line) if line.lstrip().startswith('|') else line for line in content.split('\n'))
+            existing = ''
+            if content.startswith('---\n') and '\n---\n' in content[4:]:
+                existing, content = content[4:].split('\n---\n', 1)
+                existing = re.sub(r'^(source|source_modified|sync_managed):.*\n?', '', existing, flags=re.M)
+            properties = (existing.rstrip() + '\n' if existing else '')
+            if not re.search(r'^cssclasses:', properties, re.M):
+                properties += 'cssclasses: [kb-note]\n'
+            properties += ('source: ' + json.dumps(str(src.relative_to(root)), ensure_ascii=False)
+                           + '\nsource_modified: ' + json.dumps(datetime.fromtimestamp(src.stat().st_mtime, timezone.utc).isoformat())
+                           + '\nsync_managed: true\n')
+            note = '\n\n> [!info]- 来源与同步说明\n> 源文件：`' + str(src.relative_to(root)) + '`。此页为同步副本；批注放「我的笔记」。历史记录不代表当前状态。\n'
+            expected[rel.as_posix()] = '---\n' + properties + '---\n\n' + content.strip() + note
+        links = ['---', 'cssclasses: [kb-hub]', '---', '# 原始资料索引', '',
+                 '> [!info] 查做法先读知识卡，追溯证据再读原文', '']
+        navigation = []
+        for rel, label in [('00-导航与方法/07-知识卡片库.md', '知识卡片库'), ('00-导航与方法/00-知识库首页.md', '首页')]:
+            if rel in expected:
+                navigation.append('[' + label + '](' + rel + ')')
+        if navigation:
+            links += [' · '.join(navigation), '']
+        groups = {}
         for rel in sorted(expected):
-            links.append('- [[' + (Path(cfg.get('folder', '矩阵运营')) / rel).with_suffix('').as_posix() + '|' + Path(rel).stem + ']]')
+            groups.setdefault(Path(rel).parts[0], []).append(rel)
+        for group, paths in groups.items():
+            links += ['## ' + group, '']
+            for rel in paths:
+                links.append('- [[' + (Path(cfg.get('folder', '矩阵运营')) / rel).with_suffix('').as_posix() + '|' + Path(rel).stem + ']]')
+            links.append('')
         expected['全库索引.md'] = '\n'.join(links) + '\n'
         hashes = dict(old.get('files', {}))
         conflicts, changed = [], []

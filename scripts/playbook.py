@@ -420,6 +420,12 @@ def main():
         log_run(a[1], 'end', a[2] if len(a) > 2 else '')
         print('已记录收工')
         if (ROOT / 'config/obsidian-sync.json').exists():
+            for command in ('scan', 'build'):
+                check = subprocess.run([sys.executable, str(ROOT / 'scripts/knowledge_cards.py'), command],
+                                       timeout=60, check=False)
+                if check.returncode:
+                    print('知识卡片检查失败，保留现场，暂不同步')
+                    return
             result = subprocess.run([sys.executable, str(ROOT / 'scripts/obsidian_sync.py')],
                                     timeout=60, check=False)
             if result.returncode:

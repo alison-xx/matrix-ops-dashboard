@@ -76,3 +76,11 @@ python3 dashboard/server.py --demo
 `scripts/obsidian_sync.py` 将自行指定的 Markdown 来源目录增量导入本机 Obsidian 仓库。复制 `config/obsidian-sync.example.json` 为本地 `config/obsidian-sync.json`，填写自己的注册表路径、vault ID和来源目录，再执行 `python scripts/obsidian_sync.py`。`playbook.py end` 在存在此配置时自动同步；每小时兜底需在自己的调度器中配置，本仓库不安装常驻任务。
 
 同步以来源文档为准，保留 source 与更新时间，生成索引和双链。目标有手动编辑时不覆盖，新版本保留在 `state/obsidian-sync/incoming/`；源删除时保留旧笔记并记状态。建议个人笔记放在同步目录外。配置密钥值在文本中命中会省略，但本工具不构成公开脱敏保证。私人知识库、源手册、日报、注册表和同步状态均不应提交公开仓库，也不自动配置跨设备云同步。
+
+## 从运营证据提炼知识卡
+
+`knowledge_cards.py scan`按来源哈希建立待阅读队列，`build`验证卡片字段、来源与稳定ID并生成分类、主题和每日索引。脚本不执行语义提炼：运营Agent应先阅读原始实测/修复/复盘，检查已有卡，再写结论、操作步骤、边界与证据。只有真实完成阅读后，使用带来源哈希、处理理由和卡片ID的receipt执行`review --receipt <文件>`；来源变化会重新入队，旧卡来源变化会提示复查。
+
+卡片保存在本地`knowledge-cards/`，属性包含id、type（实测/踩坑/复盘）、status（已验证/局部验证/待验证/已过时）、created、updated、tags、source_files。正文包含适用场景、发生了什么、可复用做法、边界与反例、来源与证据、复查触发。日报负责每日提炼，小时任务补漏，周复盘合并重复经验；无新知识应写理由而非制造卡片。实际调度需要自行配置。
+
+配置Obsidian同步时，将knowledge-cards映射为知识卡目录、knowledge-base映射为导航目录。Markdown属性保留，表格内双链别名正确转义；自动索引不等于事实审稿。真实知识卡、阅读回执、来源快照、私人日报与本机主题设置不公开。

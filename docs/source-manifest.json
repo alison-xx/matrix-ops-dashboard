@@ -132,6 +132,11 @@
       "mode": "sanitized-source"
     },
     {
+      "path": "scripts/knowledge_cards.py",
+      "sha256": "a346cf5bc4561ec970aac60fcd64061de12c24fe8066d26119af535267f2cbe9",
+      "mode": "sanitized-source"
+    },
+    {
       "path": "scripts/lint_content.py",
       "sha256": "611703a20c736586583282bd2657e3a2bb6f5570b217f86b017df96d52f562c6",
       "mode": "sanitized-source"
@@ -178,7 +183,7 @@
     },
     {
       "path": "scripts/obsidian_sync.py",
-      "sha256": "5b53c2dcbc019865f9e611b4b176941ebb2442524f938da15f45682fba217f36",
+      "sha256": "d370e09f1f881229ef4ba40162e0029e31cfd1018dde6ec3c83e911cc8dba39c",
       "mode": "sanitized-source"
     },
     {
@@ -193,7 +198,7 @@
     },
     {
       "path": "scripts/playbook.py",
-      "sha256": "44a1ed12098f867f1f31c4a706f86d635a3b0ee910c0af6b5ee2ede32322b896",
+      "sha256": "78c0b896a7116b5c773c6772686b8824332adf42dc30d9c54620f849f25221db",
       "mode": "sanitized-source"
     },
     {
