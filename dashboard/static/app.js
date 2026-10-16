@@ -181,6 +181,10 @@ async function api(path) {
   try {
     const r = await fetch(path, { cache: 'no-store', signal: ctl.signal });
     const j = await r.json().catch(() => ({}));
+    if (r.status === 401 && j.login) { // 远程站点登录过期：回登录页，登录后回到当前位置
+      location.href = j.login + '?next=' + encodeURIComponent(location.pathname + location.search + location.hash);
+      throw new Error('需要重新登录');
+    }
     if (!r.ok) throw new Error(j.error || `HTTP ${r.status}`);
     return j;
   } finally {
@@ -1307,7 +1311,7 @@ function renderPlan(d) {
     if (!d.experiments_exists) body = `<section class="panel">${empty('<b>实验配置尚未建立。</b>config/experiments.json 建好后这里按状态分栏显示。')}</section>`;
     else {
       const col = (title, color, list) => `<div class="board-col"><h3><span class="dot" style="background:${color}"></span>${title}<span class="n">${list.length}</span></h3><div data-stagger>${list.length ? list.map((e) => expCard(e, evExp[e.id], changed.has(e.id))).join('') : '<div class="panel">' + empty('暂无') + '</div>'}</div></div>`;
-      body = `<div class="board">${col('进行中', 'var(--q)', running)}${col('已采纳', 'var(--ok)', exps.filter((e) => e.status === 'adopted'))}${col('已否决', 'var(--mute)', exps.filter((e) => e.status === 'rejected'))}</div>`;
+      body = `<div class="board">${col('进行中', 'var(--q)', running)}${col('已暂停', 'var(--warn)', exps.filter((e) => e.status === 'paused'))}${col('已采纳', 'var(--ok)', exps.filter((e) => e.status === 'adopted'))}${col('已否决', 'var(--mute)', exps.filter((e) => e.status === 'rejected'))}</div>`;
     }
   } else if (tab === 'evolve') {
     body = evolveBlock(ev);
@@ -1389,7 +1393,7 @@ function expCard(e, evx, changed) {
     ${e.hypothesis ? `<div class="hy">${esc(e.hypothesis)}</div>` : ''}
     <div class="arms">${armHtml}</div>${when}
     <div class="ft"><span>指标 ${esc(METRIC_CN[e.metric] || e.metric || '—')}${dir ? `（${dir}）` : ''}</span>${evx && evx.verdict ? `<span>判定：${esc(evx.verdict)}</span>` : ''}</div>
-    ${e.result ? `<div class="res">${esc(e.result)}</div>` : ''}</div>`;
+    ${e.result ? `<div class="res${e.status === 'paused' || e.status === 'rejected' ? ' warn' : ''}">${esc(e.result)}</div>` : ''}</div>`;
 }
 const DIM_LABEL = { dim: '维度', value: '分组', n: '条数', lift: '相对倍数', eng_rate: '互动率', n_rate: '有比率样本', bounce_2s: '2秒跳出', completion_5s: '5秒完播', views_med: '播放中位数', comments: '评论', follows: '涨粉' };
 function evolveBlock(ev) {
@@ -1612,7 +1616,8 @@ function renderNav() {
     const p = PAGES.find((x) => x.id === id);
     return `<a href="#/${id}" ${S.route.page === id ? 'aria-current="page"' : ''}>${ico(id)}<span>${p.name}</span>${id === 'overview' ? badge : ''}</a>`;
   }).join('') + `<button type="button" data-more ${inMore ? 'aria-current="page"' : ''} aria-expanded="false" aria-controls="sheet">${ico('more')}<span>${inMore ? PAGES.find((x) => x.id === S.route.page).name : '更多'}</span></button>`;
-  $('#sheet').innerHTML = PAGES.filter((p) => !MOBILE_MAIN.includes(p.id)).map((p) => `<a href="#/${p.id}" ${S.route.page === p.id ? 'aria-current="page"' : ''}>${ico(p.id)}<span>${p.name}</span><span class="ds">${esc(PAGE_DESC[p.id] || '')}</span></a>`).join('');
+  $('#sheet').innerHTML = PAGES.filter((p) => !MOBILE_MAIN.includes(p.id)).map((p) => `<a href="#/${p.id}" ${S.route.page === p.id ? 'aria-current="page"' : ''}>${ico(p.id)}<span>${p.name}</span><span class="ds">${esc(PAGE_DESC[p.id] || '')}</span></a>`).join('')
+    + (S.meta && S.meta.auth ? `<a href="/auth/logout">${ico('left')}<span>退出登录</span><span class="ds">${esc(S.meta.user || '')}</span></a>` : '');
 }
 /* 侧栏选中块滑到当前项 */
 function movePill(animate) {
@@ -1648,9 +1653,16 @@ async function loadMeta() {
   const m = S.meta;
   $('#brandName').textContent = m.title || '运营工作台';
   $('#brandSub').textContent = m.subtitle || '';
-  $('#sideVer').textContent = `v${m.version} · ${m.host}:${m.port}`;
+  $('#sideVer').textContent = m.auth ? `v${m.version} · ${location.host}` : `v${m.version} · ${m.host}:${m.port}`;
+  if (m.auth) {
+    $('#sideFoot').insertAdjacentHTML('beforeend', `<div class="small">已登录 ${esc(m.user || '')} · <a href="/auth/logout">退出</a></div>`);
+    const lr = $('#sideFoot div');
+    if (lr) lr.textContent = '只读看板，数据每小时从本机同步一次';
+  }
   $('#demoBadge').hidden = !m.demo;
   paintBrand(m.accounts);
+  renderNav();
+  movePill(false);
 }
 const THEMES = ['system', 'light', 'dark'];
 const THEME_CN = { system: '跟随系统', light: '浅色', dark: '深色' };
@@ -1715,6 +1727,7 @@ function palStatic(q) {
     { title: '运营手册', sub: '浏览全部 .md', icon: 'doc', run: () => go('plan', null, { tab: 'docs' }), words: 'manual docs 手册 规则' },
     { title: '键盘快捷键', sub: '全部快捷键', key: '?', icon: 'keyboard', run: openHelp, words: 'help shortcut 快捷键 帮助' },
   ];
+  if (S.meta && S.meta.auth) acts.push({ title: '退出登录', sub: S.meta.user || '', icon: 'left', run: () => { location.href = '/auth/logout'; }, words: 'logout 退出 登出' });
   acts.forEach((a) => { if (k && (hit(a.title) || hit(a.words))) out.push({ sec: '操作', ...a }); });
   if (!k) out.push(...acts.slice(0, 4).map((a) => ({ sec: '操作', ...a })));
   const recent = store.get('recent', []);

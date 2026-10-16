@@ -1,10 +1,19 @@
 # 矩阵运营工作台 · matrix-ops-dashboard
 
-> 一个人 + AI 运营一整个自媒体矩阵时用的本地看板。零依赖，示例数据一行命令就能跑起来。
+> 一个人 + AI 运营自媒体矩阵的看板、工具源码与流程。看板零依赖，虚构示例一行命令可运行。
 >
 > A zero-dependency, local, read-only dashboard for running a multi-platform Chinese social-media matrix (Douyin, WeChat Channels, Xiaohongshu, Weibo, Zhihu, Bilibili, Kuaishou, WeChat Official Accounts) with AI agents. Python stdlib + vanilla JS, no build step. Try it with `python3 dashboard/server.py --demo`.
 
 ![总览](docs/screenshots/overview.png)
+
+## 本次扩充
+
+- 脱敏的发布台账、热点雷达、数据回流、内容 lint、封面/信息卡、动效视频、公众号排版、声音质检、网页采集与发布适配源码。
+- [运营接入说明](docs/operations.md)、[技能地图](运营手册/技能地图.md)、[第三方技能来源与指纹](docs/skills.md)，以及两个项目自有编排技能（skills/）。
+- [逐平台违禁词检查流程](运营手册/发布前违禁词检查.md)：覆盖最终文本、图片文字、字幕、口播与首评；社区词表候选由 Agent 结合语境复核。
+- 示例配置、隐私扫描、素材与集成依赖说明。原账号、台账、私人人设、头像和声音均不包含，详见 [公开范围](docs/privacy.md)。
+
+看板保持只读。运营脚本需要另装依赖和使用者自己的平台/供应商配置，上传、发布、邮件和同步会执行外部写入；启动 demo 不会调用它们。违禁词复核仍是 Agent 检查点，尚未在 ops.py 实现全素材自动拦截。
 
 ## 为什么做这个
 
@@ -83,8 +92,8 @@ flowchart LR
 
 **发布失败的原因是怎么归类的？** 用报错文字做规则匹配（登录失效、网络/代理、账号配置、审核/风控、素材/参数、超时），规则在 `server.py` 的 `FAIL_RULES`，可以按自己用的发布工具改。
 
-**能不能拿来发布？** 不能，这个仓库是只读看板。发布由你自己的工具或脚本负责，工作台只读它们写下的台账。
+**能不能拿来发布？** 看板只读；仓库新增的运营脚本包含发布集成源码，需要配置自己的账号和通道。请先读 [接入说明](docs/operations.md)。
 
 ## 许可
 
-代码采用 [MIT](LICENSE)。第三方组件（ECharts、simple-icons、Remix Icon）的许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。各平台的名称和商标归各自所有，这里只用来区分平台。
+本项目代码和自有编排技能采用 [MIT](LICENSE)。第三方技能按上游许可自行安装，不随本仓库重新分发。第三方组件（ECharts、simple-icons、Remix Icon）的许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。各平台的名称和商标归各自所有，这里只用来区分平台。

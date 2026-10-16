@@ -1,0 +1,265 @@
+{
+  "description": "脱敏源代码清单；真实运营数据和第三方技能原文不在此清单。",
+  "files": [
+    {
+      "path": "scripts/alert_mail.py",
+      "sha256": "ce12b56b7ae6b05ca380cd3d5c3bd46e264a7dd1befc40c775a56728e7c43eaf",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/aliyun_api.py",
+      "sha256": "0cd02954bce78252384554b82d5c9925d631d3ad92379a7d0ec3a7377e5e5e3c",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/audio_qc.py",
+      "sha256": "f20e75509f53d11d982817997f3fe69a84f0ef11bb124e1f1bc80cd6e29d01c1",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/avatar_layer.py",
+      "sha256": "b6d16bb2bd00ce2928b413ba46657bf4c8ad907d2cf3f22fe9f9f8b46e90b545",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/build_payload.py",
+      "sha256": "ea4f495a60582342c4318ea82d7e5a20defb93ab94c02b25ae42537618ee675f",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/collectors/channels.js",
+      "sha256": "0563fbdf6efbba6954aa0b6196c1289cda0013b41cb8359391c295a7726fc9e0",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/collectors/douyin.js",
+      "sha256": "56478956c0a3b44671c9b80f0d4deadc65c6bef7c63a07d427725c2c2b0664eb",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/collectors/weibo.js",
+      "sha256": "8902c974463f58006373dbbf842eee4362eedcba0eb683c9356854284da33c4c",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/collectors/xhs.js",
+      "sha256": "494e59a8d0b572955b584177b8bb898d6a5c538af0f7102026aabf9d4d751081",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/collectors/zhihu.js",
+      "sha256": "26e33adfdcca1de5d670754d97dbbe816769b470ad0db20f4f2d4cb8dc724803",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/common.py",
+      "sha256": "899939d9cafeb6604cd65b14a9b8d7c6f46893dc3766722f172b049fcc1932a5",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/covers/brand_cards.py",
+      "sha256": "a2ca7d8b121d7e752e01588ee84413c852a495ac734e4dc1812ba0d4b61c7ca4",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/covers/cover_check.py",
+      "sha256": "459214d906ece678ffc1a5881a765d36b19c3b24ed32493e9125dbf47027636c",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/covers/feed_preview.py",
+      "sha256": "730237cc5a07a6a62c1d2a0c839ea6875915554e7f8b7b5c72c13eb5f4c318e2",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/daily_report.py",
+      "sha256": "412bf1f28b1405298480c064ce52445e4f38127912e0b290a7d6a41e5883c913",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/dashboard_sync.py",
+      "sha256": "4ff867b4492697ca638dca3545ebeadb8ceed40252cf642af33b23b254768544",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/edit_fx.py",
+      "sha256": "9f29cb2cb0ec44cea07e0d8052eb2e885394f4b7757eb3f1cee55c53d654de3b",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/engage.py",
+      "sha256": "e697d6e5e82b826a3811584dc1774458cffa38ab27910cb8cf7dd348794e2bf6",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/evolve.py",
+      "sha256": "ca10394e112d724d158280b1477918071d2b75d8f7f40dce3f07f66055585ba7",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/follow_kit_v3.py",
+      "sha256": "b79a4e8c48ccba9ba20f27468a2a0b31b399ca717d33bc7a46a105b893f3ef8a",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/gzh_lite.py",
+      "sha256": "970618edbcd51957fc99957b9d4b4a2585d3a002dfbde2ada3959b96c8dedc8e",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/gzh_red.py",
+      "sha256": "7e1858431fa01375da71a9d3077fbdf96af3e849886a5d3c4dd6f6dd656cb47c",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/host_images.py",
+      "sha256": "72d1801e751961d29bb45a7a068b0623dc9d1713d8bef09e582f5782ab4d1a7b",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/hot.py",
+      "sha256": "facdca8fd3e0610a6d5df4f838e4b1c3e8e82a3cea81c673d70d01eec0ca1181",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/lint_content.py",
+      "sha256": "611703a20c736586583282bd2657e3a2bb6f5570b217f86b017df96d52f562c6",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_avatar.py",
+      "sha256": "65c7ae040ebe55f25f7ce3b93b5d0de7d8b4a14d83786a981de4f5929d91ea37",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_cards.py",
+      "sha256": "5d9a0f7de87f0e094f85bfc97126cf1faddf522f211ffad94ab408ccbcc8d695",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_cover.py",
+      "sha256": "e05c753141208e903441fef6b358746374d398231f9f385442bd30ec8d015a14",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_follow_kit.py",
+      "sha256": "af51b727dcc16e3ac5475619683c4157eb9a9ab05ebab0559c3daf7bf09cf0c5",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_motion.py",
+      "sha256": "1c0e4b0864b816c67223befc7c687ae4b3cd804957259eccc8768b2d32ff4966",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_tietu.py",
+      "sha256": "674e806ee69de24ccd8429cb4f515783c6fd0e2bb3a2118342fbf3f80e08b9db",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/make_video.py",
+      "sha256": "7db610d1bc8d2109e50f51fbe54e30431b456b2a89904ee23b71c4e25757031b",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/metrics.py",
+      "sha256": "c3ce24b060850cab11069d0f2b024f0abe18f1df2f3c744f04a186a8679a4f5b",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/ops.py",
+      "sha256": "85a03e0472e7fa170d06e057af6a6a081e2de4f7c568479f148aa990359f85b3",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/oss_url.py",
+      "sha256": "80d2f86cba76ffdc412cd9d9cfef315d5948bb559309ddf4ef2cbb9b0cace358",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/playbook.py",
+      "sha256": "fb5424fec82025cd74e2e9118ca7fa774835c07c084a877e2f11b3cefdc958ba",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/qr_mail.py",
+      "sha256": "283be2eb0984ebc51f890f85b652550b619fce195602ac04c1449be4b236304c",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/radar.py",
+      "sha256": "eee3e108d63e21c0054b40979aa5ac49c7bc9ecb68a60436ce46f45228b07161",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/s2v_avatar.py",
+      "sha256": "ce6c1d8ba52df991839f9361af39870a2fbd250e21d22ec2c1939fb4da9fde4e",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/serve_images.py",
+      "sha256": "c270f008b04d719023cb5473c6b310395410321c606670852e4ba2ae833b6091",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/sticker_layer.py",
+      "sha256": "e88a3f1235f3ea442faf0fd1fe13ad4b381484f0d8593b3ee2652d1581e3fdf3",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/styles/__init__.py",
+      "sha256": "83a7a5f4d2e1ac6455fb694f2325cbe8566bb122b6e4a90c50a296a8630fc733",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/styles/huazi.py",
+      "sha256": "ad1aa30a311459dbceed1fe33a0141f47d8f16da07bce03ebe66fc11dea1d269",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/styles/jishi.py",
+      "sha256": "527f50d47929004f87eb24472d6504b1f00574c648df167281c1c9b8bc601198",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/styles/kuaijie.py",
+      "sha256": "2005fcaffd2281062167cf68d7cc3197cff9c0468e19d88549ae0bc4b1ab11e2",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/styles/zazhi.py",
+      "sha256": "6209dfa363c3902d12e5b046e2a341f5fc3827e19f62dd531b34eb3d84c9db65",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/topics.py",
+      "sha256": "5ff88f74a88888776106acd060c39ca0d79bc8284d81ab9447a81eb48603395d",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/voice_clone.py",
+      "sha256": "20aca4123416ff58db1dcc2537ef44061665a589d470769074a113a906e0d0ae",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/web_publish/channels.js",
+      "sha256": "b4b76614964ec3ee298422dd448dac4a270176a0207ce4163f42c160fe53d0a6",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/web_publish/kuaishou.js",
+      "sha256": "18133f6ad0e836addc54b44de5260a8b47ba3f10b011b3ada889190c20a8ebe3",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/web_publish/xhs.js",
+      "sha256": "2a611019cdb45b56d7dda07f4725026d0765d1d3f77b448d60e5e2cb4125afe4",
+      "mode": "sanitized-source"
+    },
+    {
+      "path": "scripts/web_shot.py",
+      "sha256": "b76d7d38ab0fe49a301c01f477fa65ff60a0eb9346cd1023510bdbcc1121b3d5",
+      "mode": "sanitized-source"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<title>登录 · 运营工作台</title>
+<style>
+  :root { --bg: #f2f3f5; --surface: #fff; --ink: #161b26; --ink-2: #4a5363; --ink-3: #7c8594; --line: #e3e6eb; --line-2: #d0d5dd; --focus: #2f6fe0; --bad: #cc2f2f; --bad-bg: #fce7e7; --ok: #17864a; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0e1014; --surface: #16191f; --ink: #eceff4; --ink-2: #b2b9c5; --ink-3: #808a99; --line: #252a33; --line-2: #333945; --focus: #6b9bff; --bad: #ff6b6b; --bad-bg: rgba(255,107,107,.14); --ok: #3cc272; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; background: var(--bg); color: var(--ink);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+  .box { width: min(380px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px 24px 24px; }
+  .mark { display: grid; grid-template-columns: repeat(4, 8px); gap: 3px; margin-bottom: 18px; }
+  .mark i { width: 8px; height: 8px; border-radius: 2px; display: block; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--ink-3); font-size: 13px; margin: 0 0 22px; }
+  label { display: block; font-size: 13px; color: var(--ink-2); margin: 14px 0 6px; }
+  .row { display: flex; gap: 8px; }
+  input { width: 100%; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: inherit; font-size: 16px; }
+  input:focus { outline: 2px solid var(--focus); outline-offset: -1px; }
+  button { height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; white-space: nowrap; padding: 0 14px; }
+  button[disabled] { opacity: .5; cursor: default; }
+  .primary { width: 100%; margin-top: 20px; background: var(--ink); color: var(--surface); border-color: var(--ink); font-weight: 600; }
+  .msg { min-height: 20px; margin-top: 12px; font-size: 13px; }
+  .msg.err { color: var(--bad); } .msg.ok { color: var(--ok); }
+  .foot { margin-top: 18px; font-size: 12px; color: var(--ink-3); text-align: center; }
+  .tabs { display: flex; gap: 4px; padding: 3px; border-radius: 10px; background: var(--bg); margin-bottom: 4px; }
+  .tabs button { flex: 1; height: 34px; border: 0; background: transparent; color: var(--ink-3); border-radius: 8px; font-size: 14px; }
+  .tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main class="box">
+  <div class="mark" aria-hidden="true"><i style="background:#111318"></i><i style="background:#fa9d3b"></i><i style="background:#fb7299"></i><i style="background:#ff2442"></i><i style="background:#e6162d"></i><i style="background:#0084ff"></i><i style="background:#07c160"></i><i style="background:#ff4906"></i></div>
+  <h1>运营工作台</h1>
+  <p class="sub">用示例服务账号登录</p>
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" id="t-code" aria-selected="true">验证码登录</button>
+    <button type="button" role="tab" id="t-pw" aria-selected="false">密码登录</button>
+  </div>
+  <form id="fp" autocomplete="on" hidden>
+    <label for="account">账号</label>
+    <input id="account" name="username" autocomplete="username" required placeholder="示例服务的手机号或邮箱">
+    <label for="password">密码</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="示例服务登录密码">
+    <button class="primary" type="submit" id="go2">登录</button>
+    <div class="msg" id="msg2" role="status" aria-live="polite"></div>
+  </form>
+  <form id="f" autocomplete="on">
+    <label for="phone">手机号</label>
+    <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="11" required placeholder="示例服务账号绑定的手机号">
+    <label for="code">验证码</label>
+    <div class="row">
+      <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" required placeholder="短信验证码">
+      <button type="button" id="send">获取验证码</button>
+    </div>
+    <button class="primary" type="submit" id="go">登录</button>
+    <div class="msg" id="msg" role="status" aria-live="polite"></div>
+  </form>
+  <div class="foot">只有授权账号可以登录 · 登录后 7 天内免登</div>
+</main>
+<script>
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const next = new URLSearchParams(location.search).get('next') || '/';
+  const say = (t, cls, id = '#msg') => { const m = $(id); m.textContent = t; m.className = 'msg ' + (cls || ''); };
+  const done = () => location.replace(next.startsWith('/') && !next.startsWith('//') ? next : '/');
+  function tab(pw) {
+    $('#t-code').setAttribute('aria-selected', String(!pw));
+    $('#t-pw').setAttribute('aria-selected', String(pw));
+    $('#f').hidden = pw;
+    $('#fp').hidden = !pw;
+    (pw ? $('#account') : $('#phone')).focus();
+    try { localStorage.setItem('ipdash.loginTab', pw ? 'pw' : 'code'); } catch (e) { /* 忽略 */ }
+  }
+  $('#t-code').addEventListener('click', () => tab(false));
+  $('#t-pw').addEventListener('click', () => tab(true));
+  try { if (localStorage.getItem('ipdash.loginTab') === 'pw') tab(true); } catch (e) { /* 忽略 */ }
+  $('#fp').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    $('#go2').disabled = true;
+    try {
+      await post('/auth/password', { account: $('#account').value.trim(), password: $('#password').value });
+      say('登录成功，正在进入…', 'ok', '#msg2');
+      done();
+    } catch (e) { say(e.message, 'err', '#msg2'); $('#go2').disabled = false; }
+  });
+  async function post(url, body) {
+    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), credentials: 'same-origin' });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || j.ok === false) throw new Error(j.error || ('HTTP ' + r.status));
+    return j;
+  }
+  let timer = null;
+  $('#send').addEventListener('click', async () => {
+    const phone = $('#phone').value.trim();
+    if (!/^1\d{10}$/.test(phone)) { say('手机号格式不对', 'err'); return; }
+    $('#send').disabled = true;
+    try {
+      await post('/auth/send', { phone });
+      say('验证码已发送', 'ok');
+      let n = 60;
+      $('#send').textContent = n + ' 秒';
+      timer = setInterval(() => { n -= 1; if (n <= 0) { clearInterval(timer); $('#send').disabled = false; $('#send').textContent = '重新获取'; } else $('#send').textContent = n + ' 秒'; }, 1000);
+      $('#code').focus();
+    } catch (e) { say(e.message, 'err'); $('#send').disabled = false; }
+  });
+  $('#f').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    $('#go').disabled = true;
+    try {
+      await post('/auth/login', { phone: $('#phone').value.trim(), code: $('#code').value.trim() });
+      say('登录成功，正在进入…', 'ok');
+      done();
+    } catch (e) { say(e.message, 'err'); $('#go').disabled = false; }
+  });
+</script>
+</body>
+</html>

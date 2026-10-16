@@ -1,0 +1,59 @@
+{
+ "experiments": [
+  {
+   "id": "E001",
+   "title": "视频钩子：数字冲突型 vs 反差型",
+   "status": "running",
+   "platforms": [
+    "douyin",
+    "channels"
+   ],
+   "hypothesis": "第一句直接给数字冲突，比先抛反差更能压低 2 秒跳出",
+   "metric": "bounce_2s",
+   "direction": "down",
+   "min_n": 8,
+   "arms": {
+    "A": "数字冲突：第一句话里出现具体数字和对比",
+    "B": "反差：先说一个反常识结论"
+   },
+   "start": "2026-10-10",
+   "review": "2026-10-20"
+  },
+  {
+   "id": "E002",
+   "title": "小红书封面：大字报 vs 实拍截图",
+   "status": "running",
+   "platforms": [
+    "xhs"
+   ],
+   "hypothesis": "大字报封面点击率更高，但收藏率可能更低",
+   "metric": "views_lift",
+   "direction": "up",
+   "min_n": 10,
+   "arms": {
+    "A": "大字报：一句话标题占满封面",
+    "B": "实拍：工具界面截图 + 小标题"
+   },
+   "start": "2026-10-07",
+   "review": "2026-10-17"
+  },
+  {
+   "id": "E000",
+   "title": "发布时段：午间 vs 晚间",
+   "status": "adopted",
+   "platforms": [
+    "douyin"
+   ],
+   "metric": "views_lift",
+   "direction": "up",
+   "min_n": 6,
+   "arms": {
+    "A": "12:00",
+    "B": "21:00"
+   },
+   "result": "晚间均播放 1.6 倍，主推时段改到 21:00",
+   "start": "2026-09-26",
+   "review": "2026-10-06"
+  }
+ ]
+}

@@ -16,3 +16,14 @@ config/dashboard.json
 
 # 导出脚本的标记文件
 .oss-export
+
+# Local integrations and rendered/private media
+config/*.json
+!config/*.example.json
+config/*auth*
+.sync.json
+assets/
+*_hf/
+*.log
+*.pem
+*.key

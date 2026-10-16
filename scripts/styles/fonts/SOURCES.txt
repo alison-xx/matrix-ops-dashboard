@@ -1,0 +1,14 @@
+剪辑风格用到的字体（全部 SIL Open Font License 1.1，可商用、可嵌入；没有声明保留字体名）
+10-16 16:20 下载（用户 10-16 16:15 同意「下载开源字体」）。每个文件先放进空的临时目录，用 file 命令和 fontTools 核对是真字体、读出名称和许可证字段，再复制到这里。
+不要换成 Mac 自带的华文、方正等商业授权字体。
+
+| 文件 | 字体 | 大小（字节） | 来源 | 许可证文本 | 用在哪 |
+|---|---|---|---|---|---|
+| NotoSerifSC-SemiBold.otf | 思源宋体 Noto Serif SC SemiBold，v2.003，weight 600 | 11771476 | https://raw.githubusercontent.com/notofonts/noto-cjk/Serif2.003/Serif/SubsetOTF/SC/NotoSerifSC-SemiBold.otf （notofonts/noto-cjk 官方仓库，Serif2.003 发布标签） | OFL-noto-serif-cjk.txt（同标签 Serif/LICENSE） | zazhi 标题第一行、引用 |
+| NotoSerifSC-Bold.otf | 思源宋体 Noto Serif SC Bold，v2.003，weight 700 | 12094336 | https://raw.githubusercontent.com/notofonts/noto-cjk/Serif2.003/Serif/SubsetOTF/SC/NotoSerifSC-Bold.otf | OFL-noto-serif-cjk.txt | zazhi 标题第二行、hook 大字、金句、章节名、片尾问题 |
+| LXGWWenKai-Medium.ttf | 霞鹜文楷 LXGW WenKai Medium，v1.522，weight 500 | 25379848 | https://github.com/lxgw/LxgwWenKai/releases/download/v1.522/LXGWWenKai-Medium.ttf （lxgw/LxgwWenKai 官方 release） | OFL-lxgw-wenkai.txt（https://raw.githubusercontent.com/lxgw/LxgwWenKai/v1.522/OFL.txt） | jishi 金句、引用、截图说明 |
+| ZCOOLKuaiLe-Regular.ttf | 站酷快乐体 ZCOOL KuaiLe，v2.001，weight 400 | 1514968 | https://raw.githubusercontent.com/google/fonts/main/ofl/zcoolkuaile/ZCOOLKuaiLe-Regular.ttf （Google Fonts 官方仓库） | OFL-zcool-kuaile.txt（同目录 OFL.txt） | huazi 标题、hook 大字、金句、数字、字幕关键词 |
+| EBGaramond-400/700.woff2、JetBrainsMono-700.woff2 | 10-16 上午从已装的 hyperframes-creative 复制 | | | OFL-eb-garamond.txt、OFL-jetbrains-mono.txt | zazhi 大号数字、jishi 时间码 |
+
+渲染时 styles/__init__.py 的 subset_fonts() 按本条页面里出现的字，用 fontTools 子集化成 woff2（几十 KB），写进 <id>_hf/assets/fonts/，不会把整套中文字体塞进页面。
+需要 .venv 里有 fonttools 和 brotli（10-16 已装：.venv/bin/pip install fonttools brotli）。

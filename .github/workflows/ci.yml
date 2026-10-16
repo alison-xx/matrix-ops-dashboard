@@ -16,7 +16,9 @@ jobs:
           node-version: '20'
       - name: 语法检查
         run: |
-          python -m py_compile dashboard/server.py dashboard/demo/make_demo.py
+          python -m compileall -q dashboard scripts tests
+          python scripts/check_public_tree.py
+          python -m unittest discover -s tests -v
           node --check dashboard/static/app.js
       - name: 示例数据冒烟测试
         run: |

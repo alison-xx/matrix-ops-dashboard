@@ -1,0 +1,10 @@
+{
+  "platform": "weibo",
+ "out_dir": "assets/covers/规范样张/cards",
+ "prefix": "weibo-morning", "start": 1, "total": 1,
+ "pages": [{"tag": "示例作者AI早报 · 10.16", "title": "昨夜今晨\nAI 圈 4 件事", "ts": 90, "is": 40, "pad": 64,
+  "items": ["**Meta** 开源 Muse Spark Open，8160 亿参数，自己部署至少 700GB 显存",
+            "**FLUX 3 Image Klein** 开源，56 亿参数，8GB 显存的 RTX 显卡能跑",
+            "**英伟达** 开源 Nemotron 3.5 Super VL，能看图片、网页和 PDF",
+            "外媒报道 **Anthropic** 三季度收入 168 亿美元，计划 11 月上市"]}]
+}

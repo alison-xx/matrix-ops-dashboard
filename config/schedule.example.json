@@ -1,0 +1,87 @@
+{
+ "timezone": "Asia/Shanghai",
+ "accounts": {
+  "douyin": {
+   "platform": "抖音",
+   "name": "示例 AI 实验室",
+   "type": "video",
+   "times": [
+    "12:00",
+    "18:00",
+    "21:00"
+   ],
+   "account_id": "demo-douyin"
+  },
+  "channels": {
+   "platform": "视频号",
+   "name": "示例聊AI",
+   "type": "video",
+   "times": [
+    "12:30",
+    "18:30"
+   ],
+   "account_id": "demo-channels"
+  },
+  "bilibili": {
+   "platform": "哔哩哔哩",
+   "name": "示例AI研究所",
+   "type": "video",
+   "times": [
+    "19:00"
+   ],
+   "account_id": "demo-bilibili"
+  },
+  "kuaishou": {
+   "platform": "快手",
+   "name": "示例聊AI",
+   "type": "video",
+   "times": [
+    "20:30"
+   ],
+   "account_id": "demo-kuaishou"
+  },
+  "xhs": {
+   "platform": "小红书",
+   "name": "示例 AI 手帐",
+   "type": "imageText",
+   "times": [
+    "08:20",
+    "12:20",
+    "20:40"
+   ],
+   "account_id": "demo-xhs"
+  },
+  "weibo": {
+   "platform": "新浪微博",
+   "name": "示例AI观察",
+   "type": "imageText",
+   "times": [
+    "08:30",
+    "11:30",
+    "14:30",
+    "18:30",
+    "22:00"
+   ],
+   "account_id": "demo-weibo"
+  },
+  "zhihu": {
+   "platform": "知乎",
+   "name": "示例AI观察",
+   "type": "article",
+   "times": [
+    "10:00",
+    "21:00"
+   ],
+   "account_id": "demo-zhihu"
+  },
+  "wechat": {
+   "platform": "微信公众号",
+   "name": "示例 AI 周刊",
+   "type": "article",
+   "times": [
+    "20:00"
+   ],
+   "account_id": "demo-wechat"
+  }
+ }
+}

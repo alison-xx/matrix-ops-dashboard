@@ -1,0 +1,10 @@
+{
+  "host": "server.example.com",
+  "user": "deploy",
+  "key": "~/.ssh/id_ed25519",
+  "app_dir": "/srv/matrix/app",
+  "data_dir": "/srv/matrix/data",
+  "port": 22,
+  "video_days": 3,
+  "keep_days": 45
+}

@@ -1,0 +1,1 @@
+{"scan":["运营手册/*.md"],"skip_files":[],"skip_line_markers":["历史","作废"],"deprecated":[],"facts":[],"tasks":{"手动":{"slots":[]},"早班":{"slots":[]},"午班":{"slots":[]},"晚班":{"slots":[]},"热点雷达":{"slots":[]},"账号活跃":{"slots":[]},"日报":{"slots":[]},"周进化":{"slots":[]}},"task_prompt":{"glob":"tasks/*.md","must_contain":["00-必读.md"],"max_chars":2600}}

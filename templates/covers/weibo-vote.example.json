@@ -1,0 +1,23 @@
+{
+  "platform": "weibo",
+ "out_dir": "assets/covers/规范样张/cards",
+ "prefix": "weibo-vote",
+ "start": 1,
+ "total": 1,
+ "pages": [
+  {
+   "type": "vote",
+   "tag": "今晚聊聊",
+   "title": "常用的 AI 崩了\n你有备用的吗？",
+   "hl": "DeepSeek 10月15日停了快 5 小时",
+   "options": [
+    "有，常备两家",
+    "没有，等它恢复",
+    "崩了正好歇会儿"
+   ],
+   "note": "评论区说说你的主力和备用",
+   "sticker": "在吗",
+   "sw": 200
+  }
+ ]
+}

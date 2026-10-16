@@ -1,0 +1,9 @@
+{
+  "platform": "weibo",
+ "out_dir": "assets/covers/规范样张/cards",
+ "prefix": "weibo-quick", "start": 1, "total": 1,
+ "pages": [{"column": "热点", "title": "150多个App\n不让AI替你点", "ts": 96, "is": 40, "pad": 64,
+  "items": ["**腾讯系 66 款**：微信、QQ、元宝、王者荣耀", "**阿里系 23 款**：淘宝、支付宝、高德、千问",
+            "**快手系 14 款，美团系 11 款**", "还有 DeepSeek、Kimi、拼多多、小红书、多家银行和三大运营商"],
+  "note": "10月14日公示期满公布 · 名单每周三更新"}]
+}

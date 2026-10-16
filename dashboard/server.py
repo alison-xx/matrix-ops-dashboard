@@ -12,7 +12,10 @@
 """
 import argparse
 import ast
+import base64
 import datetime as dt
+import hashlib
+import hmac
 import html
 import json
 import mimetypes
@@ -20,8 +23,11 @@ import os
 import re
 import sqlite3
 import sys
+import time
 import traceback
+import urllib.error
 import urllib.parse
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -1574,6 +1580,10 @@ def health_payload():
     add('engagement', '互动记录', safe(engagement_at), '每次评论/回复写 days/<日期>/engagement.jsonl')
     add('evolve', '数据进化', safe(evolve_at), '日报任务跑 evolve 写 days/<日期>/evolve.json')
     add('report', '日报', safe(report_at), '日报写 reports/<日期>.md')
+    sync = read_json(ROOT / '.sync.json', None)  # 只有远程站点（由 scripts/dashboard_sync.py 推送）才有这个文件
+    if isinstance(sync, dict):
+        add('sync', '数据同步', sync.get('at'), '本地工作台每小时把数据推到这里；过期说明那台电脑睡眠、断网或同步任务失败',
+            expect=int(CFG.get('health', {}).get('sync') or 150))
     # 规则健康：今天升版太多次，执行中的任务会拿到前后不一致的规则
     try:
         tl = changelog_timeline(read_text(MANUAL / CFG['manual_changelog']) or '', 80)
@@ -1893,9 +1903,189 @@ def growth_payload(n_days=30):
     }
 
 
+# ---------- 登录（远程站点用，--auth 配置文件启用；本机默认不开） ----------
+# 配置文件只放在服务器上，例：
+# {"provider": "provider", "allow": ["<手机号>"], "secret": "<随机 32 字节以上>", "session_days": 7,
+#  "provider_api": "https://api.example.com"}
+AUTH = None
+COOKIE = 'ipdash_s'
+_HITS = {}
+
+
+def _b64u(b):
+    return base64.urlsafe_b64encode(b).rstrip(b'=').decode()
+
+
+def _b64u_dec(s):
+    return base64.urlsafe_b64decode(s + '=' * (-len(s) % 4))
+
+
+def make_session(sub, label=''):
+    exp = int(time.time()) + int(AUTH.get('session_days') or 7) * 86400
+    body = _b64u(json.dumps({'sub': sub, 'n': label, 'exp': exp}, separators=(',', ':'), ensure_ascii=False).encode())
+    sig = _b64u(hmac.new(AUTH['secret'].encode(), body.encode(), hashlib.sha256).digest())
+    return f'{body}.{sig}', exp
+
+
+def read_session(cookie_header):
+    """校验签名、过期时间，并且账号还在允许名单里（名单改了，旧会话立刻失效）。"""
+    if not AUTH or not cookie_header:
+        return None
+    for part in cookie_header.split(';'):
+        k, _, v = part.strip().partition('=')
+        if k != COOKIE or '.' not in v:
+            continue
+        body, sig = v.rsplit('.', 1)
+        want = _b64u(hmac.new(AUTH['secret'].encode(), body.encode(), hashlib.sha256).digest())
+        if not hmac.compare_digest(sig, want):
+            return None
+        try:
+            d = json.loads(_b64u_dec(body))
+        except Exception:
+            return None
+        if int(d.get('exp') or 0) < time.time() or not allowed_phone(d.get('sub')):
+            return None
+        return d
+    return None
+
+
+def rate_ok(key, limit=8, window=600):
+    """同一来源 10 分钟内最多 8 次登录相关请求（发验证码、校验），防撞库和短信轰炸。"""
+    t = time.time()
+    hits = [x for x in _HITS.get(key, []) if t - x < window]
+    if len(hits) >= limit:
+        _HITS[key] = hits
+        return False
+    hits.append(t)
+    _HITS[key] = hits
+    return True
+
+
+def mask_phone(p):
+    p = re.sub(r'^\+86', '', str(p or ''))
+    return p[:3] + '****' + p[-4:] if len(p) >= 7 else '***'
+
+
+def norm_phone(p):
+    """规范成 +86XXXXXXXXXXX（和示例服务后端一致），格式不对返回 None。"""
+    d = re.sub(r'[\s-]', '', str(p or ''))
+    d = re.sub(r'^(\+?86)', '', d)
+    return '+86' + d if re.fullmatch(r'1\d{10}', d) else None
+
+
+def allowed_phone(p):
+    n = norm_phone(p)
+    if not n:
+        return None
+    for a in AUTH.get('allow') or []:
+        if hmac.compare_digest(n, norm_phone(a) or ''):
+            return n
+    return None
+
+
+def provider_call(path, body):
+    """服务端代调示例服务账号接口（同一套账号，不改示例服务后端）。X-provider-Client: web 让后端按网页端处理。"""
+    base = (AUTH.get('provider_api') or 'https://api.example.com').rstrip('/')
+    req = urllib.request.Request(base + path, data=json.dumps(body).encode(), method='POST', headers={
+        'Content-Type': 'application/json', 'X-provider-Client': 'web', 'User-Agent': 'ip-dashboard/1.0 (+https://api.example.com'})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            return r.status, json.loads(r.read() or b'{}')
+    except urllib.error.HTTPError as e:
+        try:
+            return e.code, json.loads(e.read() or b'{}')
+        except Exception:
+            return e.code, {}
+
+
+def provider_ok(status, j):
+    return 200 <= status < 300 and isinstance(j, dict) and j.get('code') == 0  # 示例服务后端 POST 成功返回 201
+
+
+def provider_msg(j, default):
+    m = (j or {}).get('message') or (j or {}).get('error') or default
+    if isinstance(m, dict):  # 示例服务的错误长这样：{"message": {"code": "invalid_credentials", "message": "账号或密码错误"}}
+        m = m.get('message') or m.get('code') or default
+    if isinstance(m, list):
+        m = '；'.join(str(x) for x in m)
+    return str(m)[:120]
+
+
+def _auth_state_path():
+    return Path(AUTH.get('state_file') or (Path(AUTH['_path']).parent / 'auth-state.json'))
+
+
+def pin_user(phone, user_id):
+    """第一次登录成功时记下这个手机号对应的示例服务用户 id，之后必须一致（号码换绑、被注册到别人名下时拒绝）。"""
+    p = _auth_state_path()
+    st = read_json(p, {}) or {}
+    pins = st.setdefault('pinned', {})
+    if phone in pins:
+        return hmac.compare_digest(str(pins[phone]), str(user_id))
+    pins[phone] = str(user_id)
+    try:
+        p.write_text(json.dumps(st, ensure_ascii=False), encoding='utf-8')
+        os.chmod(p, 0o600)
+    except Exception:
+        traceback.print_exc()
+    return True
+
+
+def auth_send(phone_in):
+    phone = allowed_phone(phone_in)
+    if not phone:
+        # 不在名单里的号码绝不往示例服务发码：示例服务验证码登录会给新号码自动注册账号
+        return 403, {'ok': False, 'error': '这个手机号没有访问权限'}
+    code, j = provider_call('/auth/phone-code', {'phone': phone})
+    if provider_ok(code, j):
+        return 200, {'ok': True}
+    return 502 if code >= 500 else 400, {'ok': False, 'error': f'发送验证码失败：{provider_msg(j, f"示例服务返回 {code}")}'}
+
+
+def auth_login(phone_in, code_in):
+    phone = allowed_phone(phone_in)
+    if not phone:
+        return 403, {'ok': False, 'error': '这个手机号没有访问权限'}, None
+    if not re.fullmatch(r'\d{6}', str(code_in or '')):
+        return 400, {'ok': False, 'error': '验证码是 6 位数字'}, None
+    code, j = provider_call('/auth/phone-login', {'phone': phone, 'code': str(code_in)})
+    return _finish_login(code, j, phone, '验证码不对或已过期')
+
+
+def auth_password(account_in, password_in):
+    """示例服务账号密码登录（account 可以是手机号或邮箱）。手机号先过白名单；邮箱登录成功后再核对账号绑定的手机号。"""
+    account = str(account_in or '').strip()
+    password = str(password_in or '')
+    if not account or len(password) < 8:
+        return 400, {'ok': False, 'error': '账号或密码不对（示例服务密码至少 8 位）'}, None
+    phone = None
+    if norm_phone(account):
+        phone = allowed_phone(account)
+        if not phone:
+            return 403, {'ok': False, 'error': '这个账号没有访问权限'}, None
+        account = phone
+    elif '@' not in account:
+        return 400, {'ok': False, 'error': '账号填手机号或邮箱'}, None
+    code, j = provider_call('/auth/password-login', {'account': account, 'password': password})
+    return _finish_login(code, j, phone, '账号或密码不对')
+
+
+def _finish_login(code, j, phone, default_err):
+    """示例服务登录成功后：返回的手机号必须在白名单里（且和输入一致），示例服务用户 id 必须和首次登录时一致。"""
+    user = ((j or {}).get('data') or {}).get('user') or {}
+    if not provider_ok(code, j) or not user.get('id'):
+        return 401, {'ok': False, 'error': f'登录失败：{provider_msg(j, default_err)}'}, None
+    got = allowed_phone(user.get('phone'))
+    if not got or (phone and got != phone):
+        return 403, {'ok': False, 'error': '这个示例服务账号没有访问权限'}, None
+    if not pin_user(got, user['id']):
+        return 403, {'ok': False, 'error': '这个手机号现在对应的示例服务账号和首次登录时不同，已拒绝'}, None
+    return 200, {'ok': True}, (got, user.get('displayName') or mask_phone(got))
+
+
 # ---------- HTTP ----------
 class Handler(BaseHTTPRequestHandler):
-    server_version = 'XiaoxinDashboard/1.0'
+    server_version = 'creatorDashboard/1.0'
 
     def log_message(self, fmt, *args):  # 简洁日志，不打印查询参数以外的东西
         sys.stderr.write('%s %s\n' % (now().strftime('%H:%M:%S'), fmt % args))
@@ -1909,6 +2099,8 @@ class Handler(BaseHTTPRequestHandler):
         if not (extra and 'Cache-Control' in extra):
             self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('X-Frame-Options', 'DENY')
+        self.send_header('Referrer-Policy', 'same-origin')
         for k, v in (extra or {}).items():
             self.send_header(k, v)
         self.end_headers()
@@ -1921,11 +2113,75 @@ class Handler(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self.do_GET()
 
+    def do_POST(self):
+        try:
+            path = urllib.parse.urlsplit(self.path).path
+            if not AUTH or path not in ('/auth/send', '/auth/login', '/auth/password'):
+                return self._json({'error': 'not found'}, 404)
+            # 防跨站请求：Origin 必须是本站
+            origin = urllib.parse.urlsplit(self.headers.get('Origin') or '').netloc
+            host = self.headers.get('X-Forwarded-Host') or self.headers.get('Host') or ''
+            if not origin or origin != host:
+                return self._json({'ok': False, 'error': '来源不对'}, 403)
+            n = int(self.headers.get('Content-Length') or 0)
+            if n > 4096:
+                return self._json({'ok': False, 'error': '请求太大'}, 413)
+            try:
+                body = json.loads(self.rfile.read(n) or b'{}')
+            except Exception:
+                return self._json({'ok': False, 'error': '格式不对'}, 400)
+            ip = self.headers.get('X-Real-IP') or self.client_address[0]
+            if not rate_ok(f'{ip}|{path}') or (path == '/auth/send' and not rate_ok('send|' + str(norm_phone(body.get('phone'))), 5, 600)) \
+                    or (path == '/auth/password' and not rate_ok('pw|' + str(body.get('account') or '').strip().lower(), 5, 900)):
+                return self._json({'ok': False, 'error': '操作太频繁，10 分钟后再试'}, 429)
+            if path == '/auth/send':
+                code, j = auth_send(body.get('phone'))
+                sys.stderr.write(f'{now():%H:%M:%S} auth send {mask_phone(body.get("phone"))} -> {code}\n')
+                return self._json(j, code)
+            if path == '/auth/password':
+                code, j, who = auth_password(body.get('account'), body.get('password'))
+                acc = str(body.get('account') or '')
+                sys.stderr.write(f'{now():%H:%M:%S} auth password {mask_phone(acc) if "@" not in acc else acc[:2] + "***"} -> {code}\n')
+            else:
+                code, j, who = auth_login(body.get('phone'), body.get('code'))
+                sys.stderr.write(f'{now():%H:%M:%S} auth login {mask_phone(body.get("phone"))} -> {code}\n')
+            if not who:
+                return self._json(j, code)
+            token, exp = make_session(who[0], who[1])
+            max_age = int(exp - time.time())
+            body_b = json.dumps(j, ensure_ascii=False).encode()
+            return self._send(200, body_b, extra={'Set-Cookie': f'{COOKIE}={token}; Path=/; Max-Age={max_age}; HttpOnly; Secure; SameSite=Lax'})
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+        except Exception as e:
+            traceback.print_exc()
+            try:
+                self._json({'ok': False, 'error': f'{type(e).__name__}'}, 500)
+            except Exception:
+                pass
+
     def do_GET(self):
         try:
             u = urllib.parse.urlsplit(self.path)
             path = urllib.parse.unquote(u.path)
             q = {k: v[-1] for k, v in urllib.parse.parse_qs(u.query).items()}
+            self.session = None
+            if AUTH:
+                if path == '/robots.txt':
+                    return self._send(200, 'User-agent: *\nDisallow: /\n', 'text/plain; charset=utf-8')
+                if path == '/login':
+                    if read_session(self.headers.get('Cookie')):
+                        return self._send(302, b'', 'text/plain', {'Location': '/'})
+                    return self._static('login.html')
+                if path == '/auth/logout':
+                    return self._send(302, b'', 'text/plain', {'Location': '/login', 'Set-Cookie': f'{COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax'})
+                if path == '/favicon.ico':
+                    return self._send(204, b'', 'image/x-icon')
+                self.session = read_session(self.headers.get('Cookie'))
+                if not self.session:
+                    if path.startswith('/api/') or path.startswith('/files/'):
+                        return self._json({'error': '未登录或登录已过期', 'login': '/login'}, 401)
+                    return self._send(302, b'', 'text/plain', {'Location': '/login?next=' + urllib.parse.quote(self.path, safe='')})
             if path in ('/', '/index.html'):
                 return self._static('index.html')
             if path.startswith('/static/'):
@@ -2053,7 +2309,8 @@ class Handler(BaseHTTPRequestHandler):
         if route == 'accounts':
             return self._json(accounts_payload())
         if route == 'meta':
-            return self._json(meta_payload())
+            sess = getattr(self, 'session', None)
+            return self._json({**meta_payload(), 'auth': bool(AUTH), 'user': (sess or {}).get('n') if AUTH else None})
         if route == 'health':
             return self._json(health_payload())
         if route == 'search':
@@ -2131,7 +2388,15 @@ def main(argv=None):
     ap.add_argument('--host', default=os.environ.get('DASH_HOST', HOST), help='监听地址，默认 127.0.0.1（只给本机看）')
     ap.add_argument('--port', type=int, default=int(os.environ.get('DASH_PORT', PORT)))
     ap.add_argument('--demo', action='store_true', help='用示例数据运行（首次自动生成到 dashboard/demo/sample）')
+    ap.add_argument('--auth', help='登录配置文件（JSON：provider、allow、secret…），部署到公网时必须开')
     args = ap.parse_args(argv)
+    global AUTH
+    if args.auth:
+        AUTH = json.loads(Path(args.auth).read_text(encoding='utf-8'))
+        AUTH['_path'] = str(Path(args.auth).resolve())
+        if len(str(AUTH.get('secret') or '')) < 32 or not AUTH.get('allow'):
+            sys.exit('登录配置不完整：secret 至少 32 个字符，allow 至少一个账号')
+        print(f'登录已开启：示例服务账号，允许 {len(AUTH["allow"])} 个号码', flush=True)
     HOST, PORT = args.host, args.port
     if args.demo:
         DEMO = True
