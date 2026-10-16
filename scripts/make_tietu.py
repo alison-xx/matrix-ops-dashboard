@@ -116,7 +116,8 @@ def page(card, i, n, column, base):
                 + (f'<div class="cap">{md(card["caption"])}</div>' if card.get('caption') else '') + foot)
     if t == 'end':
         chips = card.get('chips') or [('热点', 'AI 新闻说人话'), ('实测', '新工具先替你试'), ('能抄', '提示词直接给')]
-        return (f'<div class="en-t">{md(card.get("title", "关注示例作者\\n每天一篇 AI 实测"))}</div>'
+        end_title = card.get("title", "关注示例作者\\n每天一篇 AI 实测")
+        return (f'<div class="en-t">{md(end_title)}</div>'
                 f'<img class="en-fig" src="{fig(card.get("sticker", "07"))}">'
                 f'<div class="en-chips">' + ''.join(f'<div class="chip">{html.escape(a)}<span>{html.escape(b)}</span></div>' for a, b in chips) + '</div>'
                 + (f'<div class="en-q">{md(card["question"])}</div>' if card.get('question') else '') + foot)

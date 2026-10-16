@@ -153,7 +153,7 @@
     },
     {
       "path": "scripts/make_tietu.py",
-      "sha256": "674e806ee69de24ccd8429cb4f515783c6fd0e2bb3a2118342fbf3f80e08b9db",
+      "sha256": "b7d787aee5ba145ad964349b7731d0fb6e70fda85af90c73cd5479e83d88b004",
       "mode": "sanitized-source"
     },
     {
