@@ -1,0 +1,18 @@
+# 示例数据每次启动会重新生成
+dashboard/demo/sample/
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# 千万别把真实运营数据和密钥提交进来
+.env
+*.env
+state/
+days/
+reports/
+config/schedule.json
+config/dashboard.json
+
+# 导出脚本的标记文件
+.oss-export

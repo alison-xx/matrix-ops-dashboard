@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>运营工作台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='4' width='3' height='3' rx='.7' fill='%23111318'/%3E%3Crect x='5' y='4' width='3' height='3' rx='.7' fill='%23fa9d3b'/%3E%3Crect x='9' y='4' width='3' height='3' rx='.7' fill='%23fb7299'/%3E%3Crect x='13' y='4' width='2.5' height='3' rx='.7' fill='%23ff2442'/%3E%3Crect x='1' y='9' width='3' height='3' rx='.7' fill='%23e6162d'/%3E%3Crect x='5' y='9' width='3' height='3' rx='.7' fill='%230084ff'/%3E%3Crect x='9' y='9' width='3' height='3' rx='.7' fill='%2307c160'/%3E%3C/svg%3E">
+<script>
+  /* 主题在首帧前确定，避免深色模式下闪白 */
+  try { var th = JSON.parse(localStorage.getItem('xxdash.theme') || 'null'); if (th === 'light' || th === 'dark') document.documentElement.dataset.theme = th; } catch (e) {}
+</script>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<a class="skip" href="#page">跳到正文</a>
+<div class="app">
+  <aside class="side" aria-label="导航">
+    <div class="brand">
+      <div class="brand-mark" id="brandMark" aria-hidden="true"></div>
+      <div>
+        <div class="brand-name" id="brandName">运营工作台</div>
+        <div class="brand-sub" id="brandSub">本地只读看板</div>
+      </div>
+    </div>
+    <button class="search-trigger" type="button" data-palette aria-keyshortcuts="Meta+K Control+K /">
+      <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+      <span>搜索、跳转</span><kbd id="kbdHint">⌘K</kbd>
+    </button>
+    <nav class="nav" id="nav"><span class="nav-pill" id="navPill" aria-hidden="true"></span><div class="nav-links" id="navLinks"></div></nav>
+    <div class="side-foot" id="sideFoot">
+      <div>只读看板，不会发布或改动任何内容</div>
+      <div class="num" id="sideVer"></div>
+      <button class="linkish" type="button" data-help>键盘快捷键 <kbd>?</kbd></button>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar" id="topbar">
+      <h1 id="pageTitle">总览</h1>
+      <span class="ctx" id="pageCtx"></span>
+      <span class="demo-badge" id="demoBadge" hidden>示例数据</span>
+      <div class="right">
+        <button class="hchip" id="healthChip" type="button" aria-haspopup="dialog" aria-expanded="false" hidden></button>
+        <span id="lastRefresh"><span class="refresh-dot"></span>正在读取</span>
+        <button class="btn icon m-only" type="button" data-palette aria-label="搜索">
+          <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+        </button>
+        <button class="btn icon" id="themeBtn" type="button" aria-label="切换深浅色" title="切换深浅色（T）"></button>
+        <button class="btn" id="refreshBtn" type="button" title="立即刷新当前页（R）">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.5 2.5v3h-3"/></svg><span class="lb">刷新</span>
+        </button>
+      </div>
+    </header>
+    <div class="hpop" id="healthPop" role="dialog" aria-label="数据源状态" hidden></div>
+    <main class="page" id="page" tabindex="-1"><div class="sk-wrap"><div class="sk" style="height:320px"></div><div class="sk" style="height:160px"></div></div></main>
+  </div>
+</div>
+<nav class="bnav" id="bnav" aria-label="页面"></nav>
+<div class="sheet" id="sheet" aria-label="更多页面"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="内容详情" role="dialog">
+  <div class="drawer-h" id="drawerHead"></div>
+  <div class="drawer-b" id="drawerBody"></div>
+</aside>
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="搜索和跳转" hidden>
+  <div class="pal-box">
+    <div class="pal-in">
+      <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+      <input id="palInput" type="text" autocomplete="off" spellcheck="false" placeholder="搜内容标题、日报、手册，或输入页面名跳转" aria-controls="palList" aria-autocomplete="list" role="combobox" aria-expanded="true">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="pal-list" id="palList" role="listbox"></div>
+    <div class="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>1</kbd>–<kbd>9</kbd> 直接切页面</span></div>
+  </div>
+</div>
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-label="键盘快捷键" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="tip" role="tooltip"></div>
+<script src="/static/vendor/echarts-5.6.0.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

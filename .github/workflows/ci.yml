@@ -1,0 +1,30 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.9', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 语法检查
+        run: |
+          python -m py_compile dashboard/server.py dashboard/demo/make_demo.py
+          node --check dashboard/static/app.js
+      - name: 示例数据冒烟测试
+        run: |
+          python dashboard/server.py --demo --port 8799 &
+          for i in $(seq 1 50); do curl -sf http://127.0.0.1:8799/api/meta >/dev/null && break; sleep 0.2; done
+          for r in meta health overview growth calendar content metrics accounts engagement hot plan docs reports "search?q=AI"; do
+            curl -sf "http://127.0.0.1:8799/api/$r" | python -c "import json,sys; d=json.load(sys.stdin); e=d.get('errors') or {}; assert not e, ('$r', e); print('ok $r')"
+          done
+          # 路径穿越必须 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' 'http://127.0.0.1:8799/files/..%2Fdashboard%2Fserver.py')" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' 'http://127.0.0.1:8799/api/docs?path=..%2F..%2Fdashboard%2Fserver.py')" = 404
