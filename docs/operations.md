@@ -17,7 +17,7 @@
 1. 搜集来源：`radar.py`、`hot.py`、`topics.py`；保留原始来源，重复话题合并。没有合格话题可以不产出。
 2. 起草与改稿：human-writing → humanizer-zh。实测类内容先保存 test/ 证据，数字和经历不得补写成事实。
 3. 平台适配：短视频诊断开头与衔接；小红书匹配搜索词与标题；知乎先拆问题；公众号检查反方资料与手机排版。技能见 [skills.md](skills.md)。
-4. 生成素材：`make_cards.py`、`covers/brand_cards.py`、`make_cover.py`、`make_motion.py`、`gzh_red.py`。视频可选 kuaijie / zazhi / jishi / huazi 风格。
+4. 生成素材：`make_cards.py`、`covers/brand_cards.py`、`make_cover.py`、`make_motion.py`、`gzh-design` 红白主题组件（`gzh_red.py` 为历史工具）。视频可选 kuaijie / zazhi / jishi / huazi 风格。
 5. 审核：逐张看图片、核对字幕和口播、抽帧、`audio_qc.py`，执行 [逐平台用词复核](../运营手册/发布前违禁词检查.md)，在 review.md 保留结论，再跑 `lint_content.py`。
 6. 发布：`build_payload.py` 构造参数，`ops.py` 维护占位与事件。网页适配脚本在 `scripts/web_publish/`。先用自己的测试账号核对平台表单与结果，不把历史选择器当稳定 API。
 7. 回读：scheduled/submitted/success 都不能直接当公开。保存平台公开链接与实际可见性证据后才标 public。结果不确定先核实，避免重发。

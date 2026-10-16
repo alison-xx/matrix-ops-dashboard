@@ -48,7 +48,7 @@ python3 /path/to/skill-installer/scripts/install-skill-from-github.py --repo men
 
 SkillHub 来源可使用 `skillhub --skip-self-upgrade --dir /path/to/skills install <slug> --namespace <author>`。先读完整 SKILL.md 与脚本，核对许可、网络请求和凭据访问；升级先在临时目录审查 diff。各宿主具体安装路径以自身配置为准。
 
-写作主线：human-writing → 平台技能 → humanizer-zh → content-compliance-checker + 素材人工复核 → lint。卡片与视频技能为可选辅助，现有 Python/HTML 工具仍是主渲染链。gzh-design、wechat-layout 保留为排版参考，当前红色主题工具为 gzh_red.py。
+写作主线：human-writing → 平台技能 → humanizer-zh → content-compliance-checker + 素材人工复核 → lint。卡片与视频技能为可选辅助，现有 Python/HTML 工具仍是主渲染链。公众号默认使用 gzh-design 的红白主题组件，并按品牌授权形象制作动漫封面；gzh_red.py 保留为历史工具，不作为当前默认。
 
 对于会把检索词发给外部服务的技能，优先使用其明确支持的本地模式；不要将稿件、账号或凭据作为检索词发送。第三方技能的推广、默认人设、发布时间、付费调用及要求停顿的交互策略，不自动覆盖使用者的运营规则。
 
