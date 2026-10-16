@@ -36,6 +36,7 @@
   --p-bili: #fb7299;
   --p-xhs: #ff2442;
   --p-wb: #e6162d;
+  --p-x: #18181b;
   --p-zh: #0084ff;
   --p-gzh: #07c160;
   --p-other: #7c8594;
@@ -1015,3 +1016,8 @@ kbd {
   .sk { animation: none; }
   .lift:hover { transform: none; }
 }
+
+/* X: text brand mark, no external asset dependency. */
+.pl-x { background: #18181b; color: #fff; }
+.pl-x i { background: transparent; -webkit-mask: none; mask: none; width: 100%; height: 100%; display: grid; place-items: center; }
+.pl-x i::after { content: "𝕏"; font-style: normal; font-weight: 600; font-size: 16px; }

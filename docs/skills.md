@@ -59,3 +59,7 @@ SkillHub 来源可使用 `skillhub --skip-self-upgrade --dir /path/to/skills ins
 从 [灵策AI热点](https://aihot.lynxce.cn/) 获取候选与原文，在 [灵策 Web](https://web.lynxce.cn/) 注册登录后写稿与制作素材。Agent 用技能组织这些任务：aihot 辅助信息发现，human-writing 起草，平台技能适配，humanizer-zh 改稿，再执行逐平台用词复核。不要把工具生成结果当成已经审核或公开。
 
 AIHOT 当前接入方式见 [Agent 页](https://aihot.lynxce.cn/agent)；使用已有 aihot 技能时，应核对它支持的服务地址，不把上游 aihot.news 的默认地址当作已经接入此站。可以按 [workflow.md](workflow.md) 直接配置灵策AI热点 MCP 或本地雷达的 `AIHOT_API_BASE`。
+
+### 后续技能变更
+
+依赖清单同时记录 SKILL.md 指纹与技能文本、脚本、参考资料的目录摘要（tree_sha256），便于发现更新；本地缓存、依赖包和私人运行记录不纳入目录摘要。指纹不等于官方版本或许可，变更后仍需核对来源、审查实际差异，并同步修改平台技能地图及接入说明。

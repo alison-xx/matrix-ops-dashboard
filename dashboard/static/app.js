@@ -6,9 +6,9 @@
 /* ---------- 常量 ---------- */
 const PLAT = {
   dy: { name: '抖音' }, ks: { name: '快手' }, sph: { name: '视频号' }, bili: { name: 'B站' }, xhs: { name: '小红书' },
-  wb: { name: '微博' }, zh: { name: '知乎' }, gzh: { name: '公众号' },
+  x: { name: 'X' }, wb: { name: '微博' }, zh: { name: '知乎' }, gzh: { name: '公众号' },
 };
-const PLAT_ORDER = ['dy', 'ks', 'sph', 'bili', 'xhs', 'wb', 'zh', 'gzh'];
+const PLAT_ORDER = ['dy', 'ks', 'sph', 'bili', 'xhs', 'wb', 'x', 'zh', 'gzh'];
 const ICON = {
   overview: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/>',
   accounts: '<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.4-3.6 4.2-5.4 7.5-5.4s6.1 1.8 7.5 5.4"/>',
@@ -2011,7 +2011,7 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { re
   S.route = parseHash();
   renderNav();
   movePill(false);
-  paintBrand(['dy', 'sph', 'bili', 'ks', 'xhs', 'wb', 'zh', 'gzh'].map((pkey) => ({ pkey, name: PLAT[pkey].name })));
+  paintBrand(['dy', 'sph', 'bili', 'ks', 'xhs', 'wb', 'x', 'zh', 'gzh'].map((pkey) => ({ pkey, name: PLAT[pkey].name })));
   await loadMeta();
   load(true);
   if (S.route.page !== 'overview') {

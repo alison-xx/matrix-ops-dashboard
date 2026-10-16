@@ -6,7 +6,9 @@
       "sha256": "70a6e8c92ce74ac157e2ed11d022579aa67027610c47435a187296456008bcf3",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "9ae09a149de5f6ee2632ad6552ab60afc09fa1cd65692e98d5b951ab06893cfe"
     },
     {
       "name": "humanizer-zh",
@@ -14,7 +16,9 @@
       "sha256": "95627fd4437d886f98032ccc62d79136e6310f1fc04e354bb86431795ff206df",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "92a8b036d9e774fd51b5a3187bc2c8f6c06000d687f12e6de6795e5228aab657"
     },
     {
       "name": "humanizer",
@@ -22,7 +26,9 @@
       "sha256": "0612f1dfb1672b0ea9b97e139bf1f06cabe98d8b27424fe8ff01e1fb4cc99cad",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "f948b78eb2572263d51410a90c313328f9cfcd56cb7172920520be38c574d040"
     },
     {
       "name": "content-compliance-checker",
@@ -30,7 +36,9 @@
       "sha256": "dc1c3f1826bab3218fc1c342f5a53e2c032274ff5e4374ad07ccebe9d859ad7e",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "7cb34d2abe4e48872acf952c98a409499ec06fbe80e09428f65492e1a7a9e3dd"
     },
     {
       "name": "xy-opener",
@@ -38,7 +46,9 @@
       "sha256": "712aab35329c4110a442b0720ba35a3a6c87a2129f34e00542bbf94380e86e14",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "13bf527532d42b18cbd37c191dd94766d38156d25db7a460f487f58e6232649b"
     },
     {
       "name": "xy-script-glue",
@@ -46,15 +56,19 @@
       "sha256": "fd95bb76bcdac5ab3f54d3f4d01cbb6e3e862b5758981108dbe3e9312b6d6f79",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "20c87c7a442664876945b46830589b76f19449cd6990cca7201cc12913ae75a0"
     },
     {
       "name": "opc-short-video-review",
       "source": "https://skillhub.cn/skills/user_ccb113d8/opc-short-video-review",
-      "sha256": "f650b53cb636fc4b8a739cdb787d4a00f796910f1cfe930f68926f99a08d7b27",
+      "sha256": "93e5803ab6709ace568f8b2d220d710fb2b0316cda8d50fa41560725b1c48909",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "ea4ad467ad717a1647bd150d7cb4f21aea8a153b022a556ed0f602afeda309e4"
     },
     {
       "name": "dbs-xhs-title",
@@ -62,7 +76,9 @@
       "sha256": "23fe0120c6ba53afcf6b927c4025ecc78704f2e18c758b74f78526fef8abcee8",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "43f73aa8c6ff431d23dfdba729b041c2ac21194dfc76621dc158b022d4c1e544"
     },
     {
       "name": "zhihu-answer-master",
@@ -70,7 +86,9 @@
       "sha256": "32568af03d1a4e821d6f7ba5e1e79b297107f9fa770b6f0259f4b142414c8b1e",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "df2cac2ad4572ac84a40c8c7c058d633cbae136f01321acab54253a68a201fcb"
     },
     {
       "name": "wechat-article-craft",
@@ -78,15 +96,19 @@
       "sha256": "225e1a7186f146b6dfc77c2c0c67bd354a33ba2f18b8b45056f3d08483c60cae",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "a24e1ab3f9ee930023988055b751a5466cfe73046a6ddeef4c4182316a3c8da4"
     },
     {
       "name": "dbskill-dontbesilent",
       "source": "https://skillhub.cn/skills/user_13deaa5f/dbskill-dontbesilent",
-      "sha256": "8f4f237fcbf7061e4a16fce9316272ff83ea59328aa9b4e93983c70d8a2e776e",
+      "sha256": "955f61dfd3ca5efc96319f85f02e3ea1b8a480b380a3c9a393261aff5a2f79e1",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "a800015e027deba1c99561873e1e751db6f93dcc12f5c78cc74213e368ff0b61"
     },
     {
       "name": "aihot",
@@ -94,7 +116,9 @@
       "sha256": "1fe3b86de1309617713c4b205b6dbaef0fe2cf28cb61cfb9f4c9b4accae521a1",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "6b8deeeb263f56fb7068865e8fa4a8c328f593651e344be0595137efe8a8ecba"
     },
     {
       "name": "easel-social-cards",
@@ -102,7 +126,9 @@
       "sha256": "30ba42a874155b9e2c2b289a2ae2bacddd6d0778fdabeef258d427a3c023ea2a",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "17cf152fb32ae21b3f742f0d137997f33b70f8e7c5c0c049f439fe7afe50dfdc"
     },
     {
       "name": "card-design",
@@ -110,7 +136,9 @@
       "sha256": "23b95d450ee41659432d11edb9e99204dc0bfaafeaa1232cb76a6c1bc56c3dec",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "7720f2a819eb540bf75b1ddb641ff8f63ddbdccc98c7cb0ab2aa939f951f62b3"
     },
     {
       "name": "card-xiaohongshu",
@@ -118,7 +146,9 @@
       "sha256": "845086143ef7099742947010e4e0feb3740ef1140d95b23d45f7189e7f323898",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "bbe70df8678dccefb084779490f2d24871fc3ba904c824a5ee239d3d3e02e301"
     },
     {
       "name": "card-quote",
@@ -126,7 +156,9 @@
       "sha256": "0d251a308c285a611c8f0cae567d4b0a40ed7a8e2337570351703df176e76cde",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "1fb0dbf3065b0d2ddb98c9b4c3703a49b533193715474adfede52a646cf68ff8"
     },
     {
       "name": "comparison-card",
@@ -134,7 +166,9 @@
       "sha256": "2e007b6f3573acbb013d04beacb95672baf7d0ab8a324b70e38cb0b5d039b0aa",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "857106811a2984a05b813b445e97db60a21abc518febebe4d4eb19e8e79b9fca"
     },
     {
       "name": "poster-hero",
@@ -142,7 +176,9 @@
       "sha256": "2607fbbccbb06a9df8b48666c7192bcc09cff9866ac0e7346b79e7f3c6e6ffa0",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "c537f90b3142e696e8a3f76ba4116e3bd54f83476e0a3d8c782651b71e00d3db"
     },
     {
       "name": "blcaptain-style-skill",
@@ -150,7 +186,9 @@
       "sha256": "9e5ea4258b0695a8e91910cb0e53e5f059ae35b74b322f5a9bfed5b1038d42e1",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "cc7437f5a742a2888d4ac82431dd2a2a8c37e8bc684ef28f0d8b615f8ffbc82a"
     },
     {
       "name": "guizang-social-card-skill",
@@ -158,7 +196,9 @@
       "sha256": "8311a62184ec81d25d3711cfcf5ec771558d300a3caaf43b464527db1178dd98",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "c894e154867abe3ae227a8e627d5780208951877bb6e99882dbeeaa000fe2acf"
     },
     {
       "name": "hyperframes",
@@ -166,7 +206,9 @@
       "sha256": "a277e9e46b3b5b8619639a353a4af3f46f8ae4f2e622ba802d5af730d135f410",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "4a0a7fd4b3935c7e47f1b5b3156ae39462e01db9acadd75215373627ba15542c"
     },
     {
       "name": "hyperframes-core",
@@ -174,7 +216,9 @@
       "sha256": "18ac7784765cc29af5a4d88f2a63a15deaf5395985009af188b5e3718edcfe3d",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "24231d50e64af8393f43232e272836015b12bf77aa1c79db16078968e9c62a11"
     },
     {
       "name": "hyperframes-creative",
@@ -182,7 +226,9 @@
       "sha256": "9da7b7ac84c8d884b54125887ecca1a645a38337013082b96af2fdc0259c945a",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "f54685311d80184de5096047368d86e5e905f82ef779056955899ded3581046f"
     },
     {
       "name": "hyperframes-animation",
@@ -190,7 +236,9 @@
       "sha256": "b35f1f8eff68e9ff480a5d5d343a1bf5a40ebb7d0d9be20b0b980cfdb36047f3",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "48431e36d0247359ae688cb49c25a377ecb7a2d16e4e10047d293348a261ae9f"
     },
     {
       "name": "hyperframes-audio",
@@ -198,7 +246,9 @@
       "sha256": "daf3250390426ef096a7d2f71082919418099decbd1f31288640a43b43c7e293",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "fb548a98ff1958c249d2efb531a822d4118f8cca33c5266528de01dedd3a7d04"
     },
     {
       "name": "hyperframes-cli",
@@ -206,7 +256,9 @@
       "sha256": "8bba949a98797fd01b4c88600486730083524a81377d0c0d44b07ee1cae48321",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "3a5acfd7e51f7dc02fb1fa1dc028ebe7f43934e50e684f8a6afb414d2aa0960e"
     },
     {
       "name": "hyperframes-registry",
@@ -214,7 +266,9 @@
       "sha256": "f1925b202cabd125b509658b11db593b55340b1926ecb056fc31aa4233a2b4f6",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "d830f60ed9fa64926a63120a5a50a0202837ba94eca9d07ad2d7adbe5dc0e888"
     },
     {
       "name": "hyperframes-keyframes",
@@ -222,7 +276,9 @@
       "sha256": "d6484e8367ed522f2a89af9ec30ae3cd86ae243b5a23c5ab00a7a682e3d1a791",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "7aa30eafc9dcac0ef684390df34182728d6067cfdca15188807c802342a8d70c"
     },
     {
       "name": "faceless-explainer",
@@ -230,7 +286,9 @@
       "sha256": "8d2173d2ad8ff1fc4c6b40e6e455233e6ada180055c11ae8f75d6625da3925a1",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "f456939d6c5bf068f1092d888fd4ed69e73b9d8f8384dcad8c8bcccdc03f93a5"
     },
     {
       "name": "media-use",
@@ -238,7 +296,9 @@
       "sha256": "0f08ff6b493a46e0505dcc9c0c607e517e0eb70e7dc2b7b5c1f51b4f27bb6181",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "3cfab73dc65c5e2afff61a6b3c51ae51e75deaaf9d6a10f44d9e757e1c7ebe6b"
     },
     {
       "name": "yixiaoer",
@@ -246,7 +306,9 @@
       "sha256": "fc30d156926d4589d84201f6cdf60a246d507b56d31b74915d6403a8e318606a",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "d0b8e40db1fea2649342924b790412c11bd6a696173d0098a8c78b0db4589d6d"
     },
     {
       "name": "gzh-design",
@@ -254,7 +316,9 @@
       "sha256": "f5bfc70b507bb5707244780ab98ba635866083ecfacf19c84a8c1f1df73df31c",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "711dc7e45b8dbff959d78e042730e65c89d311d6113f56b6bfc857cccb8875cb"
     },
     {
       "name": "wechat-layout",
@@ -262,7 +326,9 @@
       "sha256": "a7636585510451217af0d12dcfd095054937ae852e00c360116ea4267b467bb8",
       "bundled": false,
       "license": "Follow upstream license; redistribution not assumed",
-      "note": "Local snapshot fingerprint; install from original author and review updates."
+      "note": "Local snapshot fingerprint; install from original author and review updates.",
+      "available_at_snapshot": true,
+      "tree_sha256": "64c0aa0cb93ce690993cb84cfeae9ee33a58cfc2f754aa03d9b1c921b78cfe50"
     }
   ]
 }
