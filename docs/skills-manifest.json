@@ -338,7 +338,7 @@
       "sha256": "a4550b4a4c0598c14847843352ed33bb30b6be92aceca5d36c6782108a3ff8aa",
       "bundled": false,
       "license": "MIT; bundled pyJianYingDraft Apache-2.0",
-      "note": "Install from original upstream. Local draft creation verified; native app import/export require separate verification. Portrait normalization compatibility notes: jianying-editing.md. Upstream text and private media not bundled.",
+      "note": "Install from original upstream. Local draft creation, macOS native import/playback/GUI export and final-file QC verified in a scoped test. Each new export still requires independent validation. Portrait normalization, sample-rate and tail-frame compatibility notes: jianying-editing.md. Upstream text and private media not bundled.",
       "available_at_snapshot": true,
       "workflow": "jianying-editing.md"
     }
