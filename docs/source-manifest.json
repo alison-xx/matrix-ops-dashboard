@@ -173,7 +173,7 @@
     },
     {
       "path": "scripts/ops.py",
-      "sha256": "ebb372da53c3a6565ef0328579a943636bcc7adc2703be026cdd7460fc85d431",
+      "sha256": "278c38313ad94476cf9163e9eee20b406788903f69e7ee69a15d6227fdea3d47",
       "mode": "sanitized-source"
     },
     {

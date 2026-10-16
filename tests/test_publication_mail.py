@@ -83,4 +83,17 @@ class PublicationMailTests(unittest.TestCase):
                         ops.submit(c,'web-item')
                 c.close()
 
+    def test_external_agent_route_blocks_scheduler_submit(self):
+        from unittest.mock import patch
+        import ops
+        with tempfile.TemporaryDirectory() as d:
+            with patch.object(ops, 'DB', Path(d)/'ops.sqlite3'):
+                c=ops.connect()
+                for slot in ('channels','wechat','wechat_tietu'):
+                    c.execute('INSERT INTO items(id,slot,status) VALUES(?,?,?)',(slot,slot,'ready'))
+                    with patch.dict(ops.SCHED['accounts'], {slot:{'publish_via':'external_agent'}}):
+                        with self.assertRaisesRegex(ValueError,'其他 Agent'):
+                            ops.submit(c,slot)
+                c.close()
+
 if __name__=='__main__':unittest.main()
