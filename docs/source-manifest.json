@@ -193,7 +193,7 @@
     },
     {
       "path": "scripts/playbook.py",
-      "sha256": "5a64c301bc5f64781fc64d7379be193d29547b70f1adcb4ae4fb50d8d2333eb7",
+      "sha256": "44a1ed12098f867f1f31c4a706f86d635a3b0ee910c0af6b5ee2ede32322b896",
       "mode": "sanitized-source"
     },
     {

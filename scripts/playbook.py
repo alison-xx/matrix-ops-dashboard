@@ -14,7 +14,7 @@
   playbook.py version
 任务名：早班 午班 晚班 Office课 热点雷达 账号活跃 日报 周进化 手动
 """
-import datetime as dt, glob, json, os, pathlib, re, sys
+import datetime as dt, glob, json, os, pathlib, re, sys, subprocess
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import ROOT, now, env
 
