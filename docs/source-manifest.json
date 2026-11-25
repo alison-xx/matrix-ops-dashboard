@@ -28,7 +28,7 @@
     },
     {
       "path": "scripts/build_payload.py",
-      "sha256": "26de860a59c3390eec0209b182251dc6e774389d61b333c41698e87245285c44",
+      "sha256": "a39c73391d07d8d6ecbb5c85435f54f7a267213cea83bf3dd3f10538eda63a0e",
       "mode": "sanitized-source"
     },
     {

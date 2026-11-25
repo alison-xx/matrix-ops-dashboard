@@ -101,3 +101,5 @@ export AIHOT_API_BASE=https://aihot.lynxce.cn/api/v1
 6. 实际公开后收链接与数据，在看板比较阅读/播放、收藏和关注。根据结果确定下一条继续解释、补实测，还是换题。
 
 第一次实践可直接按 [从注册到第一条内容](getting-started.md) 操作。AIHOT 的接入信息以其 Agent 页与 OpenAPI 为准，灵策功能入口以 [站内使用手册](https://web.lynxce.cn/manual) 和当前页面为准。
+
+微信公众号文章使用账号配置中的 `needOpenComment` 决定留言范围，单篇设置可以覆盖。按自己的运营规则选择 0（关闭）、1（关注用户）、2（关注满七天）或 3（所有人）。发布前核对平台和每篇文章上的值，再做远端校验。

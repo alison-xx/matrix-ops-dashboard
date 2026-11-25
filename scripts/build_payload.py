@@ -180,7 +180,9 @@ def build(post_path):
         elif p['slot'] == 'wechat':
             cover = upload(rel(p['cover']), cache)
             content = rel(p['wechat_html']).read_text()
+            comment_scope = p.get('needOpenComment', acc.get('needOpenComment', 0))  # 微信公众号：3 为所有人可留言。
             art = {'title': p['title'], 'content': content, 'cover': {'key': cover['key'], 'raw': cover}, 'type': p.get('original', 1),
+                   'needOpenComment': comment_scope,
                    'digest': p.get('digest', '')[:120], 'quickRepost': 1}
             # 10-16 用户：「原创都声明」（type=1）；声明原创要带作者名
             art['authorName'] = (p.get('author') or '示例作者')[:8]
@@ -190,7 +192,8 @@ def build(post_path):
             pa['cover'] = cover
             pa['coverKey'] = cover['key']
             pa['accountForms'] = [{'platformAccountId': acc['account_id']}]
-            pa['platformForms'] = {plat: {'articles': [art], 'notifySubscribers': 0, 'pubType': 1, **sched}}
+            pa['platformForms'] = {plat: {'articles': [art], 'needOpenComment': comment_scope,
+                                          'notifySubscribers': 0, 'pubType': 1, **sched}}
     finally:
         cache_p.write_text(dump(cache))
     out = post_path.with_name(post_path.stem + '.payload.json')
