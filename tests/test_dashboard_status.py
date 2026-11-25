@@ -6,6 +6,15 @@ s = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s)
 
 class PublicationEvidence(unittest.TestCase):
+    def test_possible_deletion_keeps_original_pending(self):
+        detail = '{"tasks":[{"stages":"notfound","stageStatus":"fail","errorMessage":"未找到此作品（可能已删除），请前往官方平台确认。"}]}'
+        pending, confirmed = s.enrich_items([
+            {'id': 'pending', 'status': 'uncertain', 'detail': detail},
+            {'id': 'confirmed', 'status': 'failed', 'detail': '已在后台核实，重复作品已删除'},
+        ], {})
+        self.assertFalse(pending['resolved_note'])
+        self.assertTrue(confirmed['resolved_note'])
+
     def test_material_email_is_waiting_for_operator_not_published(self):
         item = s.enrich_items([{'id':'mail','status':'manual_pending','mode':'email'}], {})[0]
         self.assertEqual(item['bucket'], 'warn')

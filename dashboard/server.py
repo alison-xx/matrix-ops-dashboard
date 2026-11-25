@@ -359,7 +359,7 @@ STATUS_LABEL = {
     'scheduled': '已定时', 'success': '发布成功', 'public': '已公开', 'web': '网页已发', 'platform_draft': '平台草稿箱',
     'blocked': '被拦截', 'failed': '失败', 'uncertain': '待核实', 'deleted_dup': '已删重复', 'withdrawn': '已撤销', 'web_pending': '待网页发表', 'publishing': '网页发布中',
 }
-RESOLVED_HINT = re.compile(r'撤掉|已撤|撤回|已取消|作废|不再重发|已处理|无需处理|已删除')
+RESOLVED_HINT = re.compile(r'撤掉|已撤|撤回|已取消|作废|不再重发|已处理|无需处理|(?<!可能)已删除')
 
 
 def detail_summary(detail):
